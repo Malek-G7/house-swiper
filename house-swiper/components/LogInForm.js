@@ -1,26 +1,42 @@
 import styles from "../styles/forms.module.css"
-export default function LogInForm(){
+import { useState } from "react"
 
-    function logInHandler(event){
-        event.preventDefault()
-        alert("log in form submitted")
+export default function LogInForm() {
+
+    const [inputValues, setInputValues] = useState({
+        email: "",
+        password: ""
+    });
+
+    const logInData = {
+        email: inputValues.email,
+        password: inputValues.password
     }
 
-    return(
+    function logInHandler(event) {
+        event.preventDefault()
+        console.log(logInData)
+    }
+
+    return (
         <div className={styles.container}>
-            <form  onSubmit={logInHandler}>
+            <form onSubmit={logInHandler}>
                 <div className={styles.inputWrapper}>
                     <label>Email</label><br></br>
-                    <input type ="text"></input>
+                    <input type="text" value={inputValues.email} onChange={
+                        (e) => setInputValues({ ...inputValues, email: e.target.value })
+                    }></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Password </label><br></br>
-                    <input type ="password"></input> 
+                    <input type="password" value={inputValues.password} onChange={
+                        (e) => setInputValues({ ...inputValues, password: e.target.value })
+                    }></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <button>Log In</button>
                 </div>
-            </form>  
+            </form>
         </div>
     )
 }
