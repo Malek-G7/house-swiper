@@ -1,0 +1,10 @@
+.container{
+    display :flex;
+    justify-content: space-evenly;
+    background-image: linear-gradient(to right, antiquewhite , white);
+    font-family: "Lucida Console", "Courier New", monospace;
+
+}
+.inputWrapper {
+    margin-top: 20px;
+}
