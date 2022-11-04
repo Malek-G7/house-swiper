@@ -1,8 +1,11 @@
-import styles from "../styles/forms.module.css"
+import styles from "../../styles/forms.module.css"
 import { useState } from "react"
+import { useRouter } from 'next/router'
 
 export default function LogInForm() {
 
+    const router = useRouter()
+    
     const [inputValues, setInputValues] = useState({
         email: "",
         password: ""
@@ -16,6 +19,7 @@ export default function LogInForm() {
     function logInHandler(event) {
         event.preventDefault()
         console.log(logInData)
+        router.push("/mainpage")
     }
 
     return (

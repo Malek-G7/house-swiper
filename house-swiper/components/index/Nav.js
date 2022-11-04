@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import LogInForm from './LogInForm';

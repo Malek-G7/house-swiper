@@ -1,7 +1,11 @@
-import styles from "../styles/forms.module.css"
+import styles from "../../styles/forms.module.css"
 import { useState } from "react"
+import { useRouter } from 'next/router'
 
 export default function CreateAccountForm() {
+
+    const router = useRouter()
+    
     const [inputValues, setInputValues] = useState({
         email: "",
         password: "",
@@ -25,6 +29,7 @@ export default function CreateAccountForm() {
     function createAccountHandler(event) {
         event.preventDefault()
         console.log(accountData)
+        router.push("/mainpage")
     }
 
     return (
