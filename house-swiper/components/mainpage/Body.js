@@ -1,22 +1,29 @@
 import styles from "./Body.module.css"
-import dummydata from "./dummydata"
+import profileDummyData from "./profiledummydata"
+import cardDummyData from "./cardDummyData"
 import Card from "./Card.js"
+import EndCard  from "./EndCard.js"
+import { useState } from "react"
 
 
 export default function Body() {
 
-    const arr = ["first card", "second card", "third card"]
-    const a = arr.map((e) => {
-        return <Card text={e}></Card>
+    const [cardIterator,setCardIterator] = useState(0)
+    
+    const cards = cardDummyData.map((e) => {
+        return <Card description={e.description} img = {e.img} handleClick = {() => setCardIterator(cardIterator + 1)} ></Card>
     })
 
     return (
         <div className={styles.container}>
-            <div>
-                <h1>{dummydata.description}</h1>
+            <div className = {styles.profile}>
+                <h1>{profileDummyData.title}</h1>
+                <h2>{profileDummyData.description}</h2>
+                <p>Name : {profileDummyData.name}</p>
+                <p>Age : {profileDummyData.age}</p>
             </div>
-            <div>
-                {a}
+            <div className={styles.cards}>
+                {cardIterator < cards.length  ? cards [cardIterator] : <EndCard></EndCard> }
             </div>
         </div>
     )

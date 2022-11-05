@@ -1,0 +1,21 @@
+.container {
+    text-align: center;
+    margin: 5%;
+    background-image: linear-gradient(to right, antiquewhite , beige);
+    border-radius: 5px;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.img {
+    border-radius: 5px;
+}
+.EndCard {
+    text-align: center;
+    margin: 5%;
+    background-image: white;
+    border-radius: 5px;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
