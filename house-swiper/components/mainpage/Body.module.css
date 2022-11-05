@@ -3,3 +3,10 @@
     flex-direction: row;
     justify-content: space-around
 }
+.profile{
+    flex-grow: 1;
+    text-align: center;
+}
+.cards{
+    flex-grow: 1;
+}
