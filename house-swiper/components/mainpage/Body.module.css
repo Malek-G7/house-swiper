@@ -4,6 +4,9 @@
     justify-content: space-around
 }
 .profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     flex-grow: 1;
     text-align: center;
 }
