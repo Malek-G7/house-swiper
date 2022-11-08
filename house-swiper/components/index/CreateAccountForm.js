@@ -13,7 +13,9 @@ export default function CreateAccountForm() {
         gender: "",
         purpose: "",
         age: "",
-        occupation: ""
+        occupation: "",
+        description: "",
+        img: ""
     });
 
     const accountData = {
@@ -23,7 +25,9 @@ export default function CreateAccountForm() {
         gender: inputValues.gender,
         purpose: inputValues.purpose,
         age: inputValues.age,
-        occupation: inputValues.occupation
+        occupation: inputValues.occupation,
+        description: inputValues.description,
+        img: inputValues.img
     }
 
     function createAccountHandler(event) {
@@ -88,6 +92,18 @@ export default function CreateAccountForm() {
                     <label>Age</label><br></br>
                     <input type="number" value={inputValues.age} onChange={
                         (e) => setInputValues({ ...inputValues, age: e.target.value })
+                    }></input>
+                </div>
+                <div className={styles.inputWrapper}>
+                    <label>Description</label><br></br>
+                    <textarea value={inputValues.description} onChange={
+                        (e) => setInputValues({ ...inputValues, description: e.target.value })
+                    }></textarea>
+                </div>
+                <div className={styles.inputWrapper}>
+                    <label>Upload Image</label><br></br>
+                    <input type="file" value={inputValues.img} onChange={
+                        (e) => setInputValues({ ...inputValues, img: e.target.value })
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>

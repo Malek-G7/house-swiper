@@ -8,3 +8,10 @@
 .inputWrapper {
     margin-top: 20px;
 }
+.inputWrapper > input{
+    font-family:"Lucida Console", "Courier New", monospace; 
+}
+.inputWrapper > textarea{
+    font-family:"Lucida Console", "Courier New", monospace; resize:none; 
+    font-size: medium;
+}
