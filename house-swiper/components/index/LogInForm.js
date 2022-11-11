@@ -38,7 +38,7 @@ export default function LogInForm() {
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>
-                    <button>Log In</button>
+                    <button className = {styles.buttons}>Log In</button>
                 </div>
             </form>
         </div>

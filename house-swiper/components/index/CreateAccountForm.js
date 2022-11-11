@@ -107,7 +107,7 @@ export default function CreateAccountForm() {
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>
-                    <button>Create Account</button>
+                    <button className = {styles.buttons}>Create Account</button>
                 </div>
             </form>
         </div>
