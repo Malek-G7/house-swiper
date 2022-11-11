@@ -28,8 +28,8 @@ export default function Body() {
                     <p>Name : {profileDummyData.name}</p>
                     <p>Age : {profileDummyData.age}</p>
                 </div>
-                <div>
-                    <button onClick ={editProfileHandler}>edit profile</button>
+                <div className = {styles.editButton}>
+                    <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>
                 </div>
             </div>
             <div className={styles.cards}>

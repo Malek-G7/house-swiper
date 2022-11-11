@@ -1,4 +1,5 @@
 import styles from "./ProfileDetails.module.css"
+import body from "./Body.module.css"
 import Image from 'next/image'
 
 export default function ProfileDetails(props){
@@ -7,11 +8,11 @@ export default function ProfileDetails(props){
             <div>
                 <p>Image: {props.img}</p>
                 <Image src = "/houseSwiperHomePagePic.JPG" width = "500px" height= "500px"></Image>
-                <button>edit image</button>
+                <button className = {body.buttons}>edit image</button>
             </div>
             <div>
                 <p>Description: {props.description}</p>
-                <button>edit description</button>
+                <button className = {body.buttons}>edit description</button>
             </div>
         </div>
     )
