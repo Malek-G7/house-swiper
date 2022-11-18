@@ -6,7 +6,7 @@ import EndCard  from "./EndCard.js"
 import { useState } from "react"
 import { useRouter } from 'next/router'
 
-export default function Body() {
+export default function Body(props) {
 
     const [cardIterator,setCardIterator] = useState(0)
     const router = useRouter()
@@ -18,7 +18,6 @@ export default function Body() {
     function editProfileHandler(){
         router.push("./editProfile")
     }
-
     return (
         <div className={styles.container}>
             <div className = {styles.profile}>
@@ -27,6 +26,7 @@ export default function Body() {
                     <h2>{profileDummyData.description}</h2>
                     <p>Name : {profileDummyData.name}</p>
                     <p>Age : {profileDummyData.age}</p>
+                    <p>localhost 5000 says : {props.data} </p>
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>
