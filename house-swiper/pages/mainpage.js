@@ -1,11 +1,11 @@
 
 import Nav from '../components/mainpage/Nav'
 import Body from '../components/mainpage/Body'
-export default function MainPage({data}) {
+export default function MainPage(props) {
   return (
     <div >
       <Nav />
-      <Body data = {{data}}/>
+      <Body data = {props.text}/>
     </div>
   )
 }
@@ -14,11 +14,11 @@ export async function getServerSideProps() {
 
   const res = await fetch(`http://localhost:5000/`)
   const data = await res.json()
-  console.log("data is " + data)
-
 
   // Pass data to the page via props
   return {
-     props:  {data}
+     props: {
+        text : data.text 
+     } 
     }
 }

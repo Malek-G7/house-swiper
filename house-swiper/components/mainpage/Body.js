@@ -18,7 +18,6 @@ export default function Body(props) {
     function editProfileHandler(){
         router.push("./editProfile")
     }
-
     return (
         <div className={styles.container}>
             <div className = {styles.profile}>
@@ -27,7 +26,7 @@ export default function Body(props) {
                     <h2>{profileDummyData.description}</h2>
                     <p>Name : {profileDummyData.name}</p>
                     <p>Age : {profileDummyData.age}</p>
-                    <p>localhost 5000 says : props.data</p>
+                    <p>localhost 5000 says : {props.data} </p>
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>
