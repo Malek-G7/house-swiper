@@ -30,9 +30,20 @@ export default function CreateAccountForm() {
         img: inputValues.img
     }
 
-    function createAccountHandler(event) {
+    async function createAccountHandler(event) {
         event.preventDefault()
-        console.log(accountData)
+        try {
+            const response = await fetch("http://localhost:5000/createAccount/", {
+                method : "POST",
+                body : JSON.stringify(accountData),
+                headers : {
+                    "content-type" : "application/json"
+                }
+            })            
+        } catch (error) {
+          alert(error)  
+        }
+
         router.push("/mainpage")
     }
 
