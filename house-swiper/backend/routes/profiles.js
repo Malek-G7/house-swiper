@@ -19,15 +19,15 @@ router.get('/:id',getProfile,(req,res) => {
 
 router.post('/', async (req,res) => {
     const profile = new Profile({
-        name: req.body.name,
-        age: req.body.age,
         email: req.body.email,
         password:req.body.password,
+        name: req.body.name,
+        age: req.body.age,
         gender:req.body.gender,
         occupation:req.body.occupation,
+        purpose:req.body.purpose,
         description:req.body.description,
-        image:req.body.image,
-        purpose:req.body.purpose
+        image:req.body.image
     })
     try {
         const newProfile = await profile.save()

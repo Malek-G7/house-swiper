@@ -10,10 +10,10 @@ export default function CreateAccountForm() {
         email: "",
         password: "",
         name: "",
-        gender: "",
-        purpose: "",
         age: "",
+        gender: "",
         occupation: "",
+        purpose: "",
         description: "",
         img: ""
     });
@@ -22,10 +22,10 @@ export default function CreateAccountForm() {
         email: inputValues.email,
         password: inputValues.password,
         name: inputValues.name,
-        gender: inputValues.gender,
-        purpose: inputValues.purpose,
         age: inputValues.age,
+        gender: inputValues.gender,
         occupation: inputValues.occupation,
+        purpose: inputValues.purpose,
         description: inputValues.description,
         img: inputValues.img
     }
@@ -33,18 +33,19 @@ export default function CreateAccountForm() {
     async function createAccountHandler(event) {
         event.preventDefault()
         try {
-            const response = await fetch("http://localhost:5000/createAccount/", {
+            const response = await fetch("../.././pages/api/CreateAccount", {
                 method : "POST",
                 body : JSON.stringify(accountData),
                 headers : {
                     "content-type" : "application/json"
                 }
-            })            
+            })   
+            let data = await response  
+            alert("response says" + JSON.stringify(data) )     
         } catch (error) {
           alert(error)  
         }
-
-        router.push("/mainpage")
+     //   router.push("/mainpage")
     }
 
     return (
