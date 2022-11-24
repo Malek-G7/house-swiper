@@ -84,7 +84,7 @@ router.delete('/:id',getProfile, async (req,res) =>{
     try{
         await res.profile.remove()
         res.json({
-            message : "deleted subscirber"
+            message : "deleted profile"
         })
     } catch (error) {
         res.status(400).json({
@@ -98,7 +98,7 @@ async function getProfile(req,res,next){
         const profile = await Profile.findById(req.params.id) 
             if(profile == null){
                 return res.status(404).json({
-                    message:"cannot find subscriber"
+                    message:"cannot find profile"
                 })
             }
         }

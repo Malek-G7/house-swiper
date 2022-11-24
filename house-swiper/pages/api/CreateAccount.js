@@ -8,10 +8,12 @@ async function handler(req,res){
                 "content-type" : "application/json"
             }
         })   
-        const data = await response.json()   
-        res.json(data)      
+        const data = await response.json() 
+        console.log(data)  
+        res.json(data)     
+        
     } catch (error) {
-      console.error(error)  
+      console.log(error)  
     }
 }
 

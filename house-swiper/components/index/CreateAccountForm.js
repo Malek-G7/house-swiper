@@ -15,7 +15,7 @@ export default function CreateAccountForm() {
         occupation: "",
         purpose: "",
         description: "",
-        img: ""
+        image: ""
     });
 
     const accountData = {
@@ -27,21 +27,19 @@ export default function CreateAccountForm() {
         occupation: inputValues.occupation,
         purpose: inputValues.purpose,
         description: inputValues.description,
-        img: inputValues.img
+        image: inputValues.img
     }
 
     async function createAccountHandler(event) {
         event.preventDefault()
         try {
-            const response = await fetch("../.././pages/api/CreateAccount", {
+            const response = await fetch("/api/CreateAccount", {
                 method : "POST",
                 body : JSON.stringify(accountData),
                 headers : {
                     "content-type" : "application/json"
                 }
-            })   
-            let data = await response  
-            alert("response says" + JSON.stringify(data) )     
+            })      
         } catch (error) {
           alert(error)  
         }
@@ -114,8 +112,8 @@ export default function CreateAccountForm() {
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Upload Image</label><br></br>
-                    <input type="file" value={inputValues.img} onChange={
-                        (e) => setInputValues({ ...inputValues, img: e.target.value })
+                    <input type="file" value={inputValues.image} onChange={
+                        (e) => setInputValues({ ...inputValues, image: e.target.value })
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>
