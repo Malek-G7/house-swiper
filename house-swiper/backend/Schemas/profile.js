@@ -1,10 +1,6 @@
 const mongoose = require("mongoose")
 
 const profileSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true
@@ -13,35 +9,35 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: false
+    },
     age: {
         type: String,
-        required: true
+        required: false
     }, 
     gender: {
         type: String,
-        required: true
-    },
-    purpose: {
-        type: String,
-        required: true
+        required: false
     },
     occupation: {
         type: String,
-        required: true
+        required: false
+    },
+    purpose: {
+        type: String,
+        required: false
     },
     description: {
         type: String,
-        required : true
+        required : false
     },
     image: {
+       // data: Buffer,
         type: String,
-        required : true
+        required : false
     },
-    date: {
-        type: Date,
-        required: true,
-        default: Date.now
-    }
 })
 
 module.exports = mongoose.model('profile',profileSchema)

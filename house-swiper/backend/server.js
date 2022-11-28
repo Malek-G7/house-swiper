@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const profilesRouter = require("./routes/profiles")
-
+const cors = require("cors")
 
 mongoose.connect(
     "mongodb+srv://malek7:<password>@houseswiper.oyq4unw.mongodb.net/?retryWrites=true&w=majority",
@@ -23,7 +23,8 @@ db.once('open', () => {
 
 app.use(express.json())
 app.use("/profiles",profilesRouter)
-
+// revisit later
+app.use(cors({origin : "*"}))
 app.listen(5000, () => {
     console.log("server started on port 5000 !")
 })

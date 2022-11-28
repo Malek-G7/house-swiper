@@ -10,41 +10,40 @@ export default function CreateAccountForm() {
         email: "",
         password: "",
         name: "",
-        gender: "",
-        purpose: "",
         age: "",
+        gender: "",
         occupation: "",
+        purpose: "",
         description: "",
-        img: ""
+        image: ""
     });
 
     const accountData = {
         email: inputValues.email,
         password: inputValues.password,
         name: inputValues.name,
-        gender: inputValues.gender,
-        purpose: inputValues.purpose,
         age: inputValues.age,
+        gender: inputValues.gender,
         occupation: inputValues.occupation,
+        purpose: inputValues.purpose,
         description: inputValues.description,
-        img: inputValues.img
+        image: inputValues.img
     }
 
     async function createAccountHandler(event) {
         event.preventDefault()
         try {
-            const response = await fetch("http://localhost:5000/createAccount/", {
+            const response = await fetch("/api/CreateAccount", {
                 method : "POST",
                 body : JSON.stringify(accountData),
                 headers : {
                     "content-type" : "application/json"
                 }
-            })            
+            })      
         } catch (error) {
           alert(error)  
         }
-
-        router.push("/mainpage")
+     //   router.push("/mainpage")
     }
 
     return (
@@ -113,8 +112,8 @@ export default function CreateAccountForm() {
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Upload Image</label><br></br>
-                    <input type="file" value={inputValues.img} onChange={
-                        (e) => setInputValues({ ...inputValues, img: e.target.value })
+                    <input type="file" value={inputValues.image} onChange={
+                        (e) => setInputValues({ ...inputValues, image: e.target.value })
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>

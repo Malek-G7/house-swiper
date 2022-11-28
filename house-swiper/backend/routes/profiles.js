@@ -19,15 +19,15 @@ router.get('/:id',getProfile,(req,res) => {
 
 router.post('/', async (req,res) => {
     const profile = new Profile({
-        name: req.body.name,
-        age: req.body.age,
         email: req.body.email,
         password:req.body.password,
+        name: req.body.name,
+        age: req.body.age,
         gender:req.body.gender,
         occupation:req.body.occupation,
+        purpose:req.body.purpose,
         description:req.body.description,
-        image:req.body.image,
-        purpose:req.body.purpose
+        image:req.body.image
     })
     try {
         const newProfile = await profile.save()
@@ -84,7 +84,7 @@ router.delete('/:id',getProfile, async (req,res) =>{
     try{
         await res.profile.remove()
         res.json({
-            message : "deleted subscirber"
+            message : "deleted profile"
         })
     } catch (error) {
         res.status(400).json({
@@ -98,7 +98,7 @@ async function getProfile(req,res,next){
         const profile = await Profile.findById(req.params.id) 
             if(profile == null){
                 return res.status(404).json({
-                    message:"cannot find subscriber"
+                    message:"cannot find profile"
                 })
             }
         }
