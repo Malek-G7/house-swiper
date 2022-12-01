@@ -43,7 +43,7 @@ export default function CreateAccountForm() {
         } catch (error) {
           alert(error)  
         }
-     //   router.push("/mainpage")
+        router.push("/mainpage")
     }
 
     return (

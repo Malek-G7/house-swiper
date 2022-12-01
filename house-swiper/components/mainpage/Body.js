@@ -3,12 +3,13 @@ import profileDummyData from "./profiledummydata"
 import cardDummyData from "./cardDummyData"
 import Card from "./Card.js"
 import EndCard  from "./EndCard.js"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from 'next/router'
 
 export default function Body(props) {
 
     const [cardIterator,setCardIterator] = useState(0)
+    const [profiles, setProfiles] = useState([]);
     const router = useRouter()
     
     const cards = cardDummyData.map((e) => {
@@ -18,6 +19,24 @@ export default function Body(props) {
     function editProfileHandler(){
         router.push("./editProfile")
     }
+
+    useEffect( () => { 
+        async function fetchData() {
+            try {
+                const response = await fetch("/api/GetProfiles", {
+                    method : "GET",
+                })   
+            const data = await response.json() 
+            setProfiles(data.map((person,index) => {
+                return <li key = {index} > {person.name ? person.name : "Name missing"}</li>
+            }))
+            } catch (error) {
+              alert(error)  
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className={styles.container}>
             <div className = {styles.profile}>
@@ -26,7 +45,7 @@ export default function Body(props) {
                     <h2>{profileDummyData.description}</h2>
                     <p>Name : {profileDummyData.name}</p>
                     <p>Age : {profileDummyData.age}</p>
-                    <p>localhost 5000 says : {props.data} </p>
+                    <p>localhost 5000 says : {profiles} </p>
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>
