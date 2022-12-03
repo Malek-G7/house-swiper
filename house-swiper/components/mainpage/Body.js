@@ -35,7 +35,8 @@ export default function Body(props) {
                         description={person.description ? person.description : "description missing"} 
                         age={person.age ? person.age : "age missing"}
                         email={person.email ? person.email : "email missing"}
-                        age={person.age ? person.age : "age missing"}
+                        gender={person.gender ? person.gender : "gender missing"}
+                        occupation = {person.occupation ? person.occupation : "occupation missing"}
 
                         handleClick = {() => { 
                             setCardIterator((prevState) => prevState+1) ;
