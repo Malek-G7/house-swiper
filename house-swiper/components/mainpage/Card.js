@@ -15,7 +15,7 @@ export default function Card(props) {
     return (
         <div className={styles.container} >
             {/* { <Image className = {styles.img} src = "/room1.jpeg" width = "850px" height = "650px"></Image> } */}
-            <img className={styles.img} src = "/room7.jpg"></img>
+            <img className={styles.img} src = {props.image}></img>
             <div >
                 <div className={styles.details}>
                     <div>
