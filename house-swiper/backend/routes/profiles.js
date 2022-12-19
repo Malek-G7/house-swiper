@@ -63,7 +63,7 @@ router.get('/:id',getProfile,(req,res) => {
 
 router.post('/', upload.single("image") , async (req,res) => {
 
-    const buffer = await sharp(req.file.buffer).resize({height: 1000, width : 750, fit :"contain"}).toBuffer()
+    const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
     
     const imageName = randomImageName()
     const params = {
