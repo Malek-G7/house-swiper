@@ -37,7 +37,7 @@ export default function Body(props) {
                         email={person.email ? person.email : "email missing"}
                         gender={person.gender ? person.gender : "gender missing"}
                         occupation = {person.occupation ? person.occupation : "occupation missing"}
-
+                        image = {person.image ? person.image : "/room7.jpg"}
                         handleClick = {() => { 
                             setCardIterator((prevState) => prevState+1) ;
                         }}></Card>

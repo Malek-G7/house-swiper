@@ -1,11 +1,12 @@
 import styles from "../../styles/forms.module.css"
 import { useState } from "react"
 import { useRouter } from 'next/router'
+import axios from "axios"
 
 export default function CreateAccountForm() {
 
     const router = useRouter()
-    
+    const [file, setFile] = useState()
     const [inputValues, setInputValues] = useState({
         email: "",
         password: "",
@@ -15,7 +16,6 @@ export default function CreateAccountForm() {
         occupation: "",
         purpose: "",
         description: "",
-        image: ""
     });
 
     const accountData = {
@@ -27,23 +27,34 @@ export default function CreateAccountForm() {
         occupation: inputValues.occupation,
         purpose: inputValues.purpose,
         description: inputValues.description,
-        image: inputValues.img
-    }
+        }
 
     async function createAccountHandler(event) {
         event.preventDefault()
-        try {
-            const response = await fetch("/api/CreateAccount", {
-                method : "POST",
-                body : JSON.stringify(accountData),
-                headers : {
-                    "content-type" : "application/json"
-                }
-            })      
-        } catch (error) {
-          alert(error)  
-        }
-        router.push("/mainpage")
+        const formData = new FormData();
+        formData.append("email", inputValues.email)
+        formData.append("password", inputValues.password)
+        formData.append("age", inputValues.age)
+        formData.append("gender", inputValues.gender)
+        formData.append("occupation", inputValues.occupation)
+        formData.append("name", inputValues.name)
+        formData.append("decription", inputValues.description)
+        formData.append("purpose", inputValues.purpose)
+        formData.append("image", file)
+        await axios.post("http://localhost:5000/profiles", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+
+        // try {
+        //     const response = await fetch("/api/CreateAccount", {
+        //         method : "POST",
+        //         body : JSON.stringify(accountData),
+        //         headers : {
+        //             "content-type" : "application/json"
+        //         }
+        //     })      
+        // } catch (error) {
+        //   alert(error)  
+        // }
+        router.push("/mainpage")  
     }
 
     return (
@@ -53,25 +64,25 @@ export default function CreateAccountForm() {
                     <label>Email</label><br></br>
                     <input type="text" value={inputValues.email} onChange={
                         (e) => setInputValues({ ...inputValues, email: e.target.value })
-                    }></input>
+                    } required></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Password</label><br></br>
                     <input type="password" value={inputValues.password} onChange={
                         (e) => setInputValues({ ...inputValues, password: e.target.value })
-                    }></input>
+                    } required></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Name</label><br></br>
                     <input type="text" value={inputValues.name} onChange={
                         (e) => setInputValues({ ...inputValues, name: e.target.value })
-                    }></input>
+                    }required></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>What brings you here :D </label><br></br>
                     <select name="reason" id="reason" value={inputValues.purpose} onChange={
                         (e) => setInputValues({ ...inputValues, purpose: e.target.value })
-                    }>
+                    } required>
                         <option>Select an option</option>
                         <option value="looking">I am looking for a house or room</option>
                         <option value="leasing">I have a house or room I want to rent</option>
@@ -81,7 +92,7 @@ export default function CreateAccountForm() {
                     <label>Gender</label><br></br>
                     <select name="gender" id="gender" value={inputValues.gender} onChange={
                         (e) => setInputValues({ ...inputValues, gender: e.target.value })
-                    }>
+                    } required>
                         <option>Select your gender</option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
@@ -91,7 +102,7 @@ export default function CreateAccountForm() {
                     <label>Occupation</label><br></br>
                     <select name="occupation" id="occupation" value={inputValues.occupation} onChange={
                         (e) => setInputValues({ ...inputValues, occupation: e.target.value })
-                    }>
+                    } required>
                         <option>Select an option</option>
                         <option value="Student">Student</option>
                         <option value="Worker">Working Professional</option>
@@ -102,7 +113,7 @@ export default function CreateAccountForm() {
                     <label>Age</label><br></br>
                     <input type="number" value={inputValues.age} onChange={
                         (e) => setInputValues({ ...inputValues, age: e.target.value })
-                    }></input>
+                    }required></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Description</label><br></br>
@@ -112,9 +123,7 @@ export default function CreateAccountForm() {
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Upload Image</label><br></br>
-                    <input type="file" value={inputValues.image} onChange={
-                        (e) => setInputValues({ ...inputValues, image: e.target.value })
-                    }></input>
+                    <input onChange={e => setFile(e.target.files[0])} type="file" accept="image/*" required></input>
                 </div>
                 <div className={styles.inputWrapper}>
                     <button className = {styles.buttons}>Create Account</button>
