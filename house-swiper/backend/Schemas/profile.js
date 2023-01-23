@@ -33,11 +33,12 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required : false
     },
-    image: {
-       // data: Buffer,
+    hash:{
         type: String,
-        required : false
     },
+    salt:{
+        String
+    }
 })
 
 module.exports = mongoose.model('profile',profileSchema)

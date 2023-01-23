@@ -57,8 +57,8 @@ export default function Body(props) {
                 <div>
                     <h1>{profileDummyData.title}</h1>
                     <h2>{profileDummyData.description}</h2>
-                    <p>Name : {profileDummyData.name}</p>
-                    <p>Age : {profileDummyData.age}</p>
+                    <p>Name : </p>
+                    <p>Age : </p>
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>

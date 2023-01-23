@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const Profile = require("../Schemas/profile")
+/* Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form,
+ the file or files object contains the files uploaded via the form.*/ 
 const multer = require ("multer")
 const { S3Client } = require("@aws-sdk/client-s3")
 const { PutObjectCommand ,GetObjectCommand, DeleteObjectCommand} = require("@aws-sdk/client-s3")
@@ -9,6 +11,7 @@ const dotenv = require("dotenv").config
 const crypto = require("crypto")
 const sharp = require("sharp")
 const storage = multer.memoryStorage()
+/* Multer accepts an options object, the most basic of which is the dest property, which tells Multer where to upload the files. In case you omit the options object, the files will be kept in memory and never written to disk.*/ 
 const upload = multer({ storage: storage })
 const cors = require("cors")
 
@@ -16,6 +19,7 @@ router.use(cors({origin : "*"}))
 
 router.use(express.json({limit: '50mb'}));
 router.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
+// Accept a single file with the name fieldname. The single file will be stored in req.file.
 upload.single("image")
 
 const bucketName = 'house-swiper'
@@ -28,7 +32,7 @@ const s3 = new S3Client({
         accessKeyId:accessKey,
         secretAccessKey: secretAccessKey
     },
-    region: bucketRegion
+    region: bucketRegion 
 })
 
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
