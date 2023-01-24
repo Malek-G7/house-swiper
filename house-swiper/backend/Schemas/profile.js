@@ -3,13 +3,13 @@ const mongoose = require("mongoose")
 const profileSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: false
     },
     password: {
         type: String,
         required: true
     },
-    name: {
+    username: {
         type: String,
         required: false
     },
@@ -33,11 +33,14 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required : false
     },
-    hash:{
+    image: {
         type: String,
     },
+    hash:{
+        type: String
+    },
     salt:{
-        String
+        type: String
     }
 })
 
