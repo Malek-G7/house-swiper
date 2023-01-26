@@ -16,8 +16,6 @@ const upload = multer({ storage: storage })
 const cors = require("cors")
 const passport = require('passport');
 
-const isAuth = require('./authMiddleWare').isAuth;
-const isAdmin = require('./authMiddleWare').isAdmin;
 router.use(cors({origin : "*"}))
 
 router.use(express.json({limit: '50mb'}));
@@ -42,35 +40,35 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/login-failure', successRedirect: '/profiles/login-success' }));
 
-router.post('/register', async (req, res, next) => {
-    const saltHash = genPassword(req.body.password);
-    
-    const salt = saltHash.salt;
-    const hash = saltHash.hash;
 
-    const profile = new Profile({
-        email: "",
-        password:req.body.password,
-        username: req.body.username,
-        age: "",
-        gender:"",
-        occupation:"",
-        purpose:"",
-        description:"",
-        image:"",
-        hash: hash,
-        salt: salt,
-    })
-    try {
-        const newProfile = await profile.save()
-        //res.status(201).json(newProfile)
-        res.redirect('/profiles/login');
-    } catch (error) {
-        res.status(400).json({
-            message : error.message
-        })
-    }
- });
+// router.post('/register', async (req, res, next) => {
+//     const saltHash = genPassword(req.body.password);
+    
+//     const salt = saltHash.salt;
+//     const hash = saltHash.hash;
+
+//     const profile = new Profile({
+//         email: req.body.email,
+//         password:req.body.password,
+//         username: req.body.username,
+//         age: req.body.age,
+//         gender:req.body.gender,
+//         occupation: req.body.occupation,
+//         purpose: req.body.purpose,
+//         description: req.body.description,
+//         image: req.body.image,
+//         hash: hash,
+//         salt: salt,
+//     })
+//     try {
+//         const newProfile = await profile.save()
+//         res.redirect('/profiles/login');
+//     } catch (error) {
+//         res.status(400).json({
+//             message : error.message
+//         })
+//     }
+//  });
 
  router.get('/test', (req, res, next) => {
     res.send('<h1>Home</h1><p>Please <a href="http://localhost:5000/profiles/register">register</a></p>');
@@ -112,7 +110,11 @@ router.get('/logout', (req, res, next) => {
 });
 
 router.get('/login-success', (req, res, next) => {
-    res.send('<p>You successfully logged in. --> <a href="/profiles/protected-route">Go to protected route</a></p>');
+    if (req.isAuthenticated()) {
+        res.send('<p>You successfully logged in. --> <a href="/profiles/protected-route">Go to protected route</a></p>');
+    } else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource' });
+    }
 });
 
 router.get('/login-failure', (req, res, next) => {
@@ -123,34 +125,34 @@ router.get('/login-failure', (req, res, next) => {
 
 
 router.get('/', async (req,res) => {
-   try {
-    const getAllProfiles = await Profile.find()
-
-    for(const profile of getAllProfiles){
-        if(profile.image){
-            const getObjectParams = {
-                Bucket: bucketName,
-                Key : profile.image
-            } 
-            const command = new GetObjectCommand(getObjectParams)
-            const url = await getSignedUrl(s3,command)
-            profile.image = url
-        }
-    }
-    // console.log(getAllProfiles)
-    res.json(getAllProfiles)
-   } catch(err){
-    res.status(500).json(
-        {message: err.message 
-    })
-   }
+        try {
+            const getAllProfiles = await Profile.find()
+        
+            for(const profile of getAllProfiles){
+                if(profile.image){
+                    const getObjectParams = {
+                        Bucket: bucketName,
+                        Key : profile.image
+                    } 
+                    const command = new GetObjectCommand(getObjectParams)
+                    const url = await getSignedUrl(s3,command)
+                    profile.image = url
+                }
+            }
+            // console.log(getAllProfiles)
+            res.json(getAllProfiles)
+           } catch(err){
+            res.status(500).json(
+                {message: err.message 
+            })
+           }
 })
 
 router.get('/:id',getProfile,(req,res) => {
     res.send(res.profile)
 })
 
-router.post('/', upload.single("image") , async (req,res) => {
+router.post('/register', upload.single("image") , async (req,res) => {
 
     const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
     
@@ -165,6 +167,12 @@ router.post('/', upload.single("image") , async (req,res) => {
 
     const command = new PutObjectCommand(params)
     s3.send(command)
+
+    const saltHash = genPassword(req.body.password);
+    
+    const salt = saltHash.salt;
+    const hash = saltHash.hash;
+
     const profile = new Profile({
         email: req.body.email,
         password:req.body.password,
@@ -174,7 +182,9 @@ router.post('/', upload.single("image") , async (req,res) => {
         occupation:req.body.occupation,
         purpose:req.body.purpose,
         description:req.body.description,
-        image:imageName
+        image:imageName,
+        hash: hash,
+        salt: salt,
     })
     try {
         const newProfile = await profile.save()
@@ -251,7 +261,7 @@ async function getProfile(req,res,next){
         }
      catch (error) {
         res.send(500).json({
-            message : err.message
+            message : error.message
         })
     }
     res.profile = profile
