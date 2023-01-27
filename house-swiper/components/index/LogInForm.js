@@ -1,6 +1,7 @@
 import styles from "../../styles/forms.module.css"
 import { useState } from "react"
 import { useRouter } from 'next/router'
+import axios from "axios"
 
 export default function LogInForm() {
 
@@ -18,20 +19,21 @@ export default function LogInForm() {
 
     async function logInHandler(event) {
         event.preventDefault()
-         try {
-            const response = await fetch("/api/Login", {
-                credentials: 'include',
-                method : "POST",
-                 body : JSON.stringify(logInData),
-                 headers : {
-                     "content-type" : "application/json"
-                 }
-            })    
+        //  try {
+        //     const response = await fetch("/api/Login", {
+        //         credentials: 'include',
+        //         method : "POST",
+        //          body : JSON.stringify(logInData),
+        //          headers : {
+        //              "content-type" : "application/json"
+        //          }
+        //     })    
+        // router.push("/mainpage") 
+        //  } catch (error) {
+        //    alert(error)  
+        //  }
+        await axios.post("http://localhost:5000/profiles/login", logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
         router.push("/mainpage") 
-         } catch (error) {
-           alert(error)  
-         }
-        
     }
 
     return (

@@ -15,8 +15,34 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const cors = require("cors")
 const passport = require('passport');
+// const session = require('express-session');
+// const cookieParser = require("cookie-parser")
 
-router.use(cors({origin : "*"}))
+router.use(cors({
+    origin : "http://localhost:3000",
+    credentials:  true
+}))
+
+
+// router.use(session({
+//     secret: "secretcode",
+//     resave: true,
+//     saveUninitialized: true,
+//     // store: db,
+//     cookie: {
+//         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
+//     }
+// }));
+// router.use((req, res, next) => {
+//     console.log(req.session);
+//     next();
+// });
+// router.use(cookieParser("secretcode"))
+
+// require('../auth/passport');
+
+// router.use(passport.initialize());
+// router.use(passport.session());
 
 router.use(express.json({limit: '50mb'}));
 router.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
@@ -38,8 +64,19 @@ const s3 = new S3Client({
 
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/login-failure', successRedirect: '/profiles/login-success' }));
-
+router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
+// router.post("/login", (req, res, next) => {
+//     passport.authenticate("local", (err, user) => {
+//       if (err) throw err;
+//       else {
+//         req.logIn(user, (err) => {
+//           if (err) throw err;
+//           console.log(req.user);
+//           res.redirect("/profiles/")
+//         });
+//       }
+//     })(req, res);
+//   });
 
 // router.post('/register', async (req, res, next) => {
 //     const saltHash = genPassword(req.body.password);
@@ -125,6 +162,7 @@ router.get('/login-failure', (req, res, next) => {
 
 
 router.get('/', async (req,res) => {
+    if (req.isAuthenticated()) {
         try {
             const getAllProfiles = await Profile.find()
         
@@ -146,6 +184,10 @@ router.get('/', async (req,res) => {
                 {message: err.message 
             })
            }
+    } else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource' });
+    }
+     
 })
 
 router.get('/:id',getProfile,(req,res) => {

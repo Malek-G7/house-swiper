@@ -5,8 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require("cors")
 const app = express()
-
-
+const cookieParser = require("cookie-parser")
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -27,8 +26,13 @@ db.once('open', () => {
     console.log("connected to database")
 })
 
+app.use(cors({
+    origin : "http://localhost:3000",
+    credentials:  true
+}))
+
 app.use(session({
-    secret: "sufhsfjksdfhkjfewr",
+    secret: "secretcode",
     resave: false,
     saveUninitialized: true,
     // store: db,
@@ -40,6 +44,7 @@ app.use((req, res, next) => {
     console.log(req.session);
     next();
 });
+app.use(cookieParser("secretcode"))
 
 require('./auth/passport');
 
@@ -52,7 +57,6 @@ app.get("/",(req,res) => {
    
 })
 // revisit later
-app.use(cors({origin : "*"}))
 
 app.listen(5000, () => {
     console.log("server started on port 5000 !")

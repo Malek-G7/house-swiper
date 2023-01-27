@@ -31,7 +31,7 @@ export default function CreateAccountForm() {
 
     async function createAccountHandler(event) {
         event.preventDefault()
-       // axios.defaults.withCredentials = true;
+        axios.defaults.withCredentials = true;
         const formData = new FormData();
         formData.append("email", inputValues.email)
         formData.append("password", inputValues.password)
@@ -55,7 +55,7 @@ export default function CreateAccountForm() {
         // } catch (error) {
         //   alert(error)  
         // }
-        router.push("/mainpage")  
+       // router.push("/mainpage")  
     }
 
     return (
