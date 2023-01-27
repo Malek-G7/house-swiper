@@ -15,8 +15,6 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const cors = require("cors")
 const passport = require('passport');
-// const session = require('express-session');
-// const cookieParser = require("cookie-parser")
 
 router.use(cors({
     origin : "http://localhost:3000",
@@ -24,25 +22,6 @@ router.use(cors({
 }))
 
 
-// router.use(session({
-//     secret: "secretcode",
-//     resave: true,
-//     saveUninitialized: true,
-//     // store: db,
-//     cookie: {
-//         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
-//     }
-// }));
-// router.use((req, res, next) => {
-//     console.log(req.session);
-//     next();
-// });
-// router.use(cookieParser("secretcode"))
-
-// require('../auth/passport');
-
-// router.use(passport.initialize());
-// router.use(passport.session());
 
 router.use(express.json({limit: '50mb'}));
 router.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
@@ -64,102 +43,30 @@ const s3 = new S3Client({
 
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
-// router.post("/login", (req, res, next) => {
-//     passport.authenticate("local", (err, user) => {
-//       if (err) throw err;
-//       else {
-//         req.logIn(user, (err) => {
-//           if (err) throw err;
-//           console.log(req.user);
-//           res.redirect("/profiles/")
-//         });
-//       }
-//     })(req, res);
-//   });
+// router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
+router.post("/login", (req, res, next) => {
+    passport.authenticate("local", (err, user) => {
 
-// router.post('/register', async (req, res, next) => {
-//     const saltHash = genPassword(req.body.password);
-    
-//     const salt = saltHash.salt;
-//     const hash = saltHash.hash;
+        req.logIn(user, (err) => {
+            console.log(req.user);
+            res.end()
+        });
 
-//     const profile = new Profile({
-//         email: req.body.email,
-//         password:req.body.password,
-//         username: req.body.username,
-//         age: req.body.age,
-//         gender:req.body.gender,
-//         occupation: req.body.occupation,
-//         purpose: req.body.purpose,
-//         description: req.body.description,
-//         image: req.body.image,
-//         hash: hash,
-//         salt: salt,
-//     })
-//     try {
-//         const newProfile = await profile.save()
-//         res.redirect('/profiles/login');
-//     } catch (error) {
-//         res.status(400).json({
-//             message : error.message
-//         })
-//     }
-//  });
+    })(req, res);
+  });
 
- router.get('/test', (req, res, next) => {
-    res.send('<h1>Home</h1><p>Please <a href="http://localhost:5000/profiles/register">register</a></p>');
-});
-router.get('/login', (req, res, next) => {
-   
-    const form = '<h1>Login Page</h1><form method="POST" action="/profiles/login">\
-    Enter Username:<br><input type="text" name="username">\
-    <br>Enter Password:<br><input type="text" name="password">\
-    <br><br><input type="submit" value="Submit"></form>';
 
-    res.send(form);
-
-});
-router.get('/register', (req, res, next) => {
-
-    const form = '<h1>Register Page</h1><form method="post" action="http://localhost:5000/profiles/register">\
-                    Enter Username:<br><input type="text" name="username">\
-                    <br>Enter Password:<br><input type="text" name="password">\
-                    <br><br><input type="submit" value="Submit"></form>';
-
-    res.send(form);
-    
-});
-
-router.get('/protected-route',  (req, res, next) => {
-    if (req.isAuthenticated()) {
-        res.send("you made it to the protected route")
-    } else {
-        res.status(401).json({ msg: 'You are not authorized to view this resource' });
-    }
-});
-
-router.get('/logout', (req, res, next) => {
+router.delete('/logout', (req, res, next) => {
     req.logout(function(err){
         if(err){ return next(err)}
-        res.redirect('/profiles/protected-route');
+        req.session.destroy(function (err) {
+            if (err) { return next(err); }
+            // The response should indicate that the user is no longer authenticated.
+            return res.send({ authenticated: req.isAuthenticated() });
+          });
     });
+
 });
-
-router.get('/login-success', (req, res, next) => {
-    if (req.isAuthenticated()) {
-        res.send('<p>You successfully logged in. --> <a href="/profiles/protected-route">Go to protected route</a></p>');
-    } else {
-        res.status(401).json({ msg: 'You are not authorized to view this resource' });
-    }
-});
-
-router.get('/login-failure', (req, res, next) => {
-    res.send('You entered the wrong password.');
-});
-
-
-
 
 router.get('/', async (req,res) => {
     if (req.isAuthenticated()) {
@@ -218,7 +125,7 @@ router.post('/register', upload.single("image") , async (req,res) => {
     const profile = new Profile({
         email: req.body.email,
         password:req.body.password,
-        name: req.body.name,
+        username: req.body.username,
         age: req.body.age,
         gender:req.body.gender,
         occupation:req.body.occupation,
@@ -230,7 +137,7 @@ router.post('/register', upload.single("image") , async (req,res) => {
     })
     try {
         const newProfile = await profile.save()
-        res.status(201).json(newProfile)
+         res.status(201).json(newProfile)
     } catch (error) {
         res.status(400).json({
             message : error.message

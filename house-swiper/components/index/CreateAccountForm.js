@@ -31,7 +31,6 @@ export default function CreateAccountForm() {
 
     async function createAccountHandler(event) {
         event.preventDefault()
-        axios.defaults.withCredentials = true;
         const formData = new FormData();
         formData.append("email", inputValues.email)
         formData.append("password", inputValues.password)
@@ -42,8 +41,8 @@ export default function CreateAccountForm() {
         formData.append("decription", inputValues.description)
         formData.append("purpose", inputValues.purpose)
         formData.append("image", file)
-        await axios.post("http://localhost:5000/profiles/register", formData, { headers: {'Content-Type': 'multipart/form-data'}})
-
+        await axios.post("http://localhost:5000/profiles/register", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        window.location = window.location
         // try {
         //     const response = await fetch("/api/CreateAccount", {
         //         method : "POST",
@@ -55,7 +54,8 @@ export default function CreateAccountForm() {
         // } catch (error) {
         //   alert(error)  
         // }
-       // router.push("/mainpage")  
+       //router.push("/")  
+     
     }
 
     return (

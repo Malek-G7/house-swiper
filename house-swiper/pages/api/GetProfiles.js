@@ -1,6 +1,7 @@
 async function handler(req,res){
     try {
         const response = await fetch("http://localhost:5000/profiles", {
+            credentials: 'include',
             method : "GET",
             headers : {
                 "content-type" : "application/json"
