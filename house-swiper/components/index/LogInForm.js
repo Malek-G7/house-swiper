@@ -1,34 +1,48 @@
 import styles from "../../styles/forms.module.css"
 import { useState } from "react"
 import { useRouter } from 'next/router'
+import axios from "axios"
 
 export default function LogInForm() {
 
     const router = useRouter()
     
     const [inputValues, setInputValues] = useState({
-        email: "",
+        username: "",
         password: ""
     });
 
     const logInData = {
-        email: inputValues.email,
+        username: inputValues.username,
         password: inputValues.password
     }
 
-    function logInHandler(event) {
+    async function logInHandler(event) {
         event.preventDefault()
-        console.log(logInData)
-        router.push("/mainpage")
+        //  try {
+        //     const response = await fetch("/api/Login", {
+        //         credentials: 'include',
+        //         method : "POST",
+        //          body : JSON.stringify(logInData),
+        //          headers : {
+        //              "content-type" : "application/json"
+        //          }
+        //     })    
+        // router.push("/mainpage") 
+        //  } catch (error) {
+        //    alert(error)  
+        //  }
+        await axios.post("http://localhost:5000/profiles/login", logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
+        router.push("/mainpage") 
     }
 
     return (
         <div className={styles.container}>
             <form onSubmit={logInHandler}>
                 <div className={styles.inputWrapper}>
-                    <label>Email</label><br></br>
-                    <input type="text" value={inputValues.email} onChange={
-                        (e) => setInputValues({ ...inputValues, email: e.target.value })
+                    <label>Username</label><br></br>
+                    <input type="text" value={inputValues.username} onChange={
+                        (e) => setInputValues({ ...inputValues, username: e.target.value })
                     }></input>
                 </div>
                 <div className={styles.inputWrapper}>

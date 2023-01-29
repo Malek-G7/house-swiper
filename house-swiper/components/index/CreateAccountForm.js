@@ -10,7 +10,7 @@ export default function CreateAccountForm() {
     const [inputValues, setInputValues] = useState({
         email: "",
         password: "",
-        name: "",
+        username: "",
         age: "",
         gender: "",
         occupation: "",
@@ -21,7 +21,7 @@ export default function CreateAccountForm() {
     const accountData = {
         email: inputValues.email,
         password: inputValues.password,
-        name: inputValues.name,
+        username: inputValues.username,
         age: inputValues.age,
         gender: inputValues.gender,
         occupation: inputValues.occupation,
@@ -37,12 +37,12 @@ export default function CreateAccountForm() {
         formData.append("age", inputValues.age)
         formData.append("gender", inputValues.gender)
         formData.append("occupation", inputValues.occupation)
-        formData.append("name", inputValues.name)
+        formData.append("username", inputValues.username)
         formData.append("decription", inputValues.description)
         formData.append("purpose", inputValues.purpose)
         formData.append("image", file)
-        await axios.post("http://localhost:5000/profiles", formData, { headers: {'Content-Type': 'multipart/form-data'}})
-
+        await axios.post("http://localhost:5000/profiles/register", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        window.location = window.location
         // try {
         //     const response = await fetch("/api/CreateAccount", {
         //         method : "POST",
@@ -54,7 +54,8 @@ export default function CreateAccountForm() {
         // } catch (error) {
         //   alert(error)  
         // }
-        router.push("/mainpage")  
+       //router.push("/")  
+     
     }
 
     return (
@@ -74,8 +75,8 @@ export default function CreateAccountForm() {
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>Name</label><br></br>
-                    <input type="text" value={inputValues.name} onChange={
-                        (e) => setInputValues({ ...inputValues, name: e.target.value })
+                    <input type="text" value={inputValues.username} onChange={
+                        (e) => setInputValues({ ...inputValues, username: e.target.value })
                     }required></input>
                 </div>
                 <div className={styles.inputWrapper}>

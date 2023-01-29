@@ -3,13 +3,13 @@ const mongoose = require("mongoose")
 const profileSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: false
     },
     password: {
         type: String,
         required: true
     },
-    name: {
+    username: {
         type: String,
         required: false
     },
@@ -34,10 +34,14 @@ const profileSchema = new mongoose.Schema({
         required : false
     },
     image: {
-       // data: Buffer,
         type: String,
-        required : false
     },
+    hash:{
+        type: String
+    },
+    salt:{
+        type: String
+    }
 })
 
 module.exports = mongoose.model('profile',profileSchema)

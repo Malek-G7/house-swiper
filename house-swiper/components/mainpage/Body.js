@@ -5,6 +5,7 @@ import Card from "./Card.js"
 import EndCard  from "./EndCard.js"
 import { useState, useEffect,useRef } from "react"
 import { useRouter } from 'next/router'
+import axios from "axios"
 
 export default function Body(props) {
 
@@ -24,14 +25,12 @@ export default function Body(props) {
     useEffect( () => { 
         async function fetchData() {
             try {
-                const response = await fetch("/api/GetProfiles", {
-                    method : "GET",
-                })   
-            const data = await response.json()
+            const response = await axios.get("http://localhost:5000/profiles/",{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})     
+            const data = await response.data
             console.log(data)
              setCards(data.map((person,index) => {
                 return <Card
-                        key = {index} name={person.name ? person.name : "Name missing"}
+                        key = {index} name={person.username ? person.username : "Name missing"}
                         description={person.description ? person.description : "description missing"} 
                         age={person.age ? person.age : "age missing"}
                         email={person.email ? person.email : "email missing"}
@@ -57,8 +56,8 @@ export default function Body(props) {
                 <div>
                     <h1>{profileDummyData.title}</h1>
                     <h2>{profileDummyData.description}</h2>
-                    <p>Name : {profileDummyData.name}</p>
-                    <p>Age : {profileDummyData.age}</p>
+                    <p>Name : </p>
+                    <p>Age : </p>
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>

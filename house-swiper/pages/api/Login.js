@@ -1,8 +1,8 @@
 
 async function handler(req,res){
     try {
-        const response = await fetch("http://localhost:5000/profiles/register", {
-            
+        const response = await fetch("http://localhost:5000/profiles/login", {
+            credentials: 'include',
             method : "POST",
             body : JSON.stringify(req.body),
             headers : {
