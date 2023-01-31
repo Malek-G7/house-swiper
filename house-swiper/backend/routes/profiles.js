@@ -71,7 +71,7 @@ router.delete('/logout', (req, res, next) => {
 router.get('/', async (req,res) => {
     if (req.isAuthenticated()) {
         try {
-            const getAllProfiles = await Profile.find()
+            const getAllProfiles = await Profile.find({ _id: { $nin: [req.session.passport.user] } }) // returns all profile except current user 
         
             for(const profile of getAllProfiles){
                 if(profile.image){

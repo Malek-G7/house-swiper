@@ -38,7 +38,7 @@ export default function Body(props) {
                         occupation = {person.occupation ? person.occupation : "occupation missing"}
                         image = {person.image ? person.image : "/room7.jpg"}
                         handleClick = {async () => {
-                            await axios.post("http://localhost:5000/matching/test",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                            await axios.patch("http://localhost:5000/matching/test",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
                             setCardIterator((prevState) => prevState+1) ;
                         }}></Card>
              }))
