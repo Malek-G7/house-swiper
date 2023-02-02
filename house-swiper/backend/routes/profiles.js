@@ -97,6 +97,33 @@ router.get('/', async (req,res) => {
      
 })
 
+router.get('/matches', async(req,res) => {
+    if (req.isAuthenticated()){
+        const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
+        //console.log(user.matchedUsers)
+        matchedUsersID = user.matchedUsers
+        const matchedProfiles = []
+        for(const matchID of matchedUsersID){
+            const MatchedUser = await Profile.findOne({ _id: matchID }) 
+            if(MatchedUser.image){
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key : MatchedUser.image
+                } 
+                const command = new GetObjectCommand(getObjectParams)
+                const url = await getSignedUrl(s3,command)
+                MatchedUser.image = url
+            }
+            matchedProfiles.push(MatchedUser)
+        }
+        res.json(matchedProfiles)
+    }
+    else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource' });
+    }
+     
+})
+
 router.get('/:id',getProfile,(req,res) => {
     res.send(res.profile)
 })
