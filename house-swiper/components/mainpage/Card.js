@@ -5,11 +5,11 @@ import style from '../../styles/Home.module.css'
 export default function Card(props) {
 
     function swipeRightHandler(){
-        props.handleClick()
+        props.handleClickRight()
     }
 
     function swipeLeftHandler(){
-        props.handleClick()
+        props.handleClickLeft()
     }
 
     return (

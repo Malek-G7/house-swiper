@@ -47,9 +47,18 @@ router.patch("/test",async (req,res)=>{
                         { "$addToSet": { "matchedUsers": profile._id } },
                         { "new": true, "upsert": true },
                     );
+                    res.send(req.body.username)
+                }
+                else{
+                    res.send("no match")
                 }
             }
     }
-    res.send(" ")
+    else{
+        res.send("not authorized")
+    }
+})
+router.delete("/unmatch",async (req,res)=>{
+    
 })
 module.exports = router 

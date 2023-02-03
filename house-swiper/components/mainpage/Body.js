@@ -6,7 +6,7 @@ import EndCard  from "./EndCard.js"
 import { useState, useEffect,useRef } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
-
+import swal from 'sweetalert';
 export default function Body(props) {
 
     const [cardIterator,setCardIterator] = useState(0)
@@ -21,6 +21,10 @@ export default function Body(props) {
     function editProfileHandler(){
         router.push("./editProfile")
     }
+    function matchesHandler(){
+        router.push("./matches")
+    }
+
 
     useEffect( () => { 
         async function fetchData() {
@@ -37,8 +41,15 @@ export default function Body(props) {
                         gender={person.gender ? person.gender : "gender missing"}
                         occupation = {person.occupation ? person.occupation : "occupation missing"}
                         image = {person.image ? person.image : "/room7.jpg"}
-                        handleClick = {async () => {
-                            await axios.patch("http://localhost:5000/matching/test",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                        handleClickRight = {async () => {
+                            const res = await axios.patch("http://localhost:5000/matching/test",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                            if (res.data != "no match"){
+                                console.log(res)
+                                swal("its a match ! you matched with " + res.data)
+                            }
+                            setCardIterator((prevState) => prevState+1) ;
+                        }}
+                        handleClickLeft = { ()=>{
                             setCardIterator((prevState) => prevState+1) ;
                         }}></Card>
              }))
@@ -62,6 +73,9 @@ export default function Body(props) {
                 </div>
                 <div className = {styles.editButton}>
                     <button className = {styles.buttons} onClick ={editProfileHandler}>edit profile</button>
+                </div>
+                <div className = {styles.editButton}>
+                    <button className = {styles.buttons} onClick ={matchesHandler}>show matches</button>
                 </div>
             </div>
             <div className={styles.cards}>
