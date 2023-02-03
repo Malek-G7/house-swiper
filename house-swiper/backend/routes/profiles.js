@@ -121,7 +121,6 @@ router.get('/matches', async(req,res) => {
     else {
         res.status(401).json({ msg: 'You are not authorized to view this resource' });
     }
-     
 })
 
 router.get('/:id',getProfile,(req,res) => {

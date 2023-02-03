@@ -25,7 +25,6 @@ export default function Body(props) {
         router.push("./matches")
     }
 
-
     useEffect( () => { 
         async function fetchData() {
             try {
@@ -42,7 +41,7 @@ export default function Body(props) {
                         occupation = {person.occupation ? person.occupation : "occupation missing"}
                         image = {person.image ? person.image : "/room7.jpg"}
                         handleClickRight = {async () => {
-                            const res = await axios.patch("http://localhost:5000/matching/test",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                            const res = await axios.patch("http://localhost:5000/matching/likeProfile",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
                             if (res.data != "no match"){
                                 console.log(res)
                                 swal("its a match ! you matched with " + res.data)

@@ -12,7 +12,6 @@ export default function Body(){
         router.push("/mainpage")
     }
 
-
     useEffect( () => { 
         async function fetchData() {
             try {
@@ -59,5 +58,4 @@ export default function Body(){
             </div>
         </div>
     )
-    
     }
