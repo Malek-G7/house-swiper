@@ -41,7 +41,13 @@ const profileSchema = new mongoose.Schema({
     },
     salt:{
         type: String
-    }
+    },
+    likedUsers: [{
+        type : String
+    }],
+    matchedUsers:[{
+        type : String
+    }]
 })
 
 module.exports = mongoose.model('profile',profileSchema)

@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const profilesRouter = require("./routes/profiles")
+const matchingRouter = require("./routes/matching")
 const session = require('express-session');
 const passport = require('passport');
 const cors = require("cors")
@@ -52,6 +53,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/profiles",profilesRouter)
+app.use("/matching",matchingRouter)
+
 app.get("/",(req,res) => {
     res.send("hello world")
    
