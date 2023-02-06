@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 export default function Body(){
     const [profiles, setProfiles] = useState([]);
+    const [updateMatches,setUpdateMatches] = useState(true);
     const router = useRouter()
 
     function buttonHandler(){
@@ -26,7 +27,7 @@ export default function Body(){
               }
         }
         fetchData();
-    }, []);
+    }, [updateMatches]);
    
     function settingProfiles (data) {
         return (
@@ -42,7 +43,10 @@ export default function Body(){
                     purpose = {person.purpose? person.purpose : "N/A"}
                     image = {person.image ? person.image : "/room7.jpg"}
                     unmatchHandler = { async ()=> {
-                        const res = await axios.delete("http://localhost:5000/matching/unmatch",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                        const res = await await axios.patch("http://localhost:5000/matching/unmatch/",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                        if(res.data == "success"){
+                            setUpdateMatches(prev => !prev)
+                        }
                     }}
           /> ))}</ul>
         )
