@@ -4,6 +4,7 @@ import axios from "axios"
 
 export default function ChatPage(){
     const router = useRouter();
+    const userID = router.query.userID
     const [messages,setMesagges] = useState([])
     const [chatboxContent,setChatBoxContent] = useState("")
 
@@ -22,7 +23,7 @@ export default function ChatPage(){
     useEffect(()=>{
         async function fetchData(){
             try {
-                const getTexts =  await axios.get("http://localhost:5000/profiles/getAllChats",{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
+                const getTexts =  await axios.get("http://localhost:5000/messaging/getAllChats",{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
                 const data = await getTexts.data 
                 setMesagges(settingMessages(data))
             } catch (error) {
@@ -33,14 +34,15 @@ export default function ChatPage(){
        setMesagges(settingMessages(texts))
     },[])
 
-    function sendMessageHandler(event){
+    async function sendMessageHandler(event){
         event.preventDefault()
-        alert(chatboxContent)
+        const response = await axios.post("http://localhost:5000/messaging/sendChat",{talkingTo:userID , message:chatboxContent},{withCredentials:true}, { headers: {'Content-Type': 'application/json'}})
+        console.log(response)
     }
     return(
 
     <div>
-        <h1>you are talking to {router.query.userID}</h1>
+        <h1>you are talking to {userID}</h1>
         <div>{messages}</div>
         <div>
         <div id="message-container"></div>
