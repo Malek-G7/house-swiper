@@ -48,6 +48,10 @@ export default function Body(){
                             setUpdateMatches(prev => !prev)
                         }
                     }}
+                    messageHandler = {async ()=> {
+                        router.push(`/Chats/${person.username}`)
+                    }}
+
           /> ))}</ul>
         )
     }

@@ -62,7 +62,8 @@
 }
 .textContainer{
     display: flex;
-
+    word-wrap: break-word;
+    width: 150px;
     flex-direction: column;
     justify-content: space-around;
 
