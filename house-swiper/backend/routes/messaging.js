@@ -33,8 +33,17 @@ router.post("/sendChat", async (req,res)=>{
     }
 })
 
-router.get("/getAllChats",async (req,res)=>{
-    
+router.get("/getChats",async (req,res)=>{
+    if (req.isAuthenticated()){
+        const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
+       
+        const receiver = req.query.talkingTo
+        let room = await chatRoom.findOne({particapants : { $all: [user.username,receiver]}})
+        res.json(room)
+    }
+    else{
+        res.status(401).json({ msg: 'You are not authorized to view this resource' });
+    }
 })
 
 module.exports = router 
