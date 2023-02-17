@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const passport = require('passport');
 const Profile = require("../Schemas/profile")
+const chatRoom = require("../Schemas/chatRoom")
 
 router.patch("/likeProfile",async (req,res)=>{   
     if (req.isAuthenticated()){
@@ -60,6 +61,8 @@ router.patch("/unmatch",async (req,res)=>{
                 { "$pull": { "likedUsers": currentUser._id } },
                 { "new": true, "upsert": true },
             );
+            // remove messages when unmatching ---- may or may not keep this
+            await chatRoom.findOneAndRemove({particapants : { $all: [unmatchedProfile.username,currentUser.username ]}})                
         }
         res.send("success")
     }

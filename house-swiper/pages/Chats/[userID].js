@@ -46,7 +46,7 @@ export default function ChatPage() {
 
     async function sendMessageHandler(event) {
         event.preventDefault()
-        if(chatboxContent.trim.length != 0){
+        if(chatboxContent.length != 0){
             const response = await axios.post("http://localhost:5000/messaging/sendChat", { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
             console.log(response)
         }        
