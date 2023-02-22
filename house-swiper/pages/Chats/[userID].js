@@ -38,9 +38,13 @@ export default function ChatPage() {
             }
         }
         fetchData()
-        setInterval(() => {
-            setFlag(prev => !prev)
-        }, 5000);
+        const interval = setInterval(() => {
+           // setFlag(prev => !prev)
+           fetchData();
+        }, 1000);
+        return() => {
+            clearInterval(interval)
+        }
         // setMesagges(settingMessages(texts))
     }, [])
 
