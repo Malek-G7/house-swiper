@@ -1,29 +1,46 @@
 .list{
     list-style-type:none;
 }
-.container{
+.page{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    background:  #ece9e9;
+    background:  #ffffff;
     
 }
-.messagesContainer{
-    
+.outerMessagesContainer{
     overflow-y: scroll;
     height: 70vh;
-    
+    font-family: "Lucida Console", "Courier New", monospace;
 }
 .messages{
-    background-color: white;
-    border-radius: 30px;
+    background-color: rgb(185, 200, 233);
+    border-radius: 10px;
     margin-bottom: 15px;
-    font-size:20pt;
-    height: 50px
+    font-size:25pt;
+    height: auto;
+    display: inline-block;
+    margin-left: calc(100% - 70vh);
+    line-break:anywhere;
+    width: auto;
+    float: right;
+  }
+  .receiver{
+    background-color: rgb(243, 185, 185);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size:25pt;
+    display: inline-block;
+    width: 70vh;
+    height: auto;
+    line-break:anywhere;
+
   }
 .chatBox{
-    padding: 30px;
+    padding: 20px;
     text-align: center;
     background:antiquewhite;
     position:fixed;
@@ -32,7 +49,7 @@
 
 }
 .inputBox{
-    height:50px; width : 1500px;font-size:14pt;
+    height:50px; width : 1500px;font-size:25pt;
     border-radius: 50px;
 
 }
