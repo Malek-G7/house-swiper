@@ -71,9 +71,14 @@ router.delete('/logout', (req, res, next) => {
 router.get('/', async (req,res) => {
     if (req.isAuthenticated()) {
         try {
-            const getAllProfiles = await Profile.find({ _id: { $nin: [req.session.passport.user] } }) // returns all profile except current user 
-        
+            let getAllProfiles = await Profile.find({ _id: { $nin: [req.session.passport.user] } }) // returns all profile except current user 
+            const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
             for(const profile of getAllProfiles){
+                for(const likedUserID of user.likedUsers){
+                    if(profile. _id.toHexString()==likedUserID){
+                        getAllProfiles = getAllProfiles.filter(filteredProfiles => filteredProfiles._id != likedUserID );
+                    }
+                }
                 if(profile.image){
                     const getObjectParams = {
                         Bucket: bucketName,
@@ -84,7 +89,6 @@ router.get('/', async (req,res) => {
                     profile.image = url
                 }
             }
-            // console.log(getAllProfiles)
             res.json(getAllProfiles)
            } catch(err){
             res.status(500).json(

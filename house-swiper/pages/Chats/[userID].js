@@ -15,11 +15,11 @@ export default function ChatPage() {
 
     function settingMessages(data) {
         return (
-            <div className= {styles.messagesContainer}>
+            <div className= {styles.outerMessagesContainer}>
             <ul className={styles.list}>
                 {data.map((messageContent, index) => (
                     <li>
-                        <div className={styles.messages}>{messageContent.from} : {messageContent.message}</div>
+                        <div className={messageContent.from == userID ? styles.receiver : styles.messages}>{messageContent.from} : {messageContent.message}</div>
                         <div></div>
                     </li>))}
             </ul>
@@ -38,9 +38,13 @@ export default function ChatPage() {
             }
         }
         fetchData()
-        setInterval(() => {
-            setFlag(prev => !prev)
-        }, 5000);
+       // const interval = setInterval(() => {
+           // setFlag(prev => !prev)
+        //   fetchData();
+       // }, 1000);
+       // return() => {
+       //     clearInterval(interval)
+       // }
         // setMesagges(settingMessages(texts))
     }, [])
 
@@ -53,14 +57,14 @@ export default function ChatPage() {
     }
     return (
         
-        <div className={styles.container}>
+        <div className={styles.page}>
             <Nav/>
             <div>
             <h1>you are talking to {userID}</h1>
             </div>
-            <div>
+            
                 {messages}
-            </div>
+            
             <div className={styles.chatBox}>
                 <div id="message-container"></div>
                 <form id="send-container" onSubmit={sendMessageHandler}>
