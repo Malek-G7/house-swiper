@@ -12,7 +12,7 @@
 .outerMessagesContainer{
     overflow-y: scroll;
     height: 70vh;
-    font-family: "Lucida Console", "Courier New", monospace;
+    font-family: 'Alegreya Sans SC'
 }
 .messages{
     background-color: rgb(185, 200, 233);
