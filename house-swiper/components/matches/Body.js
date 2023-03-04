@@ -40,7 +40,7 @@ export default function Body(){
                     email={person.email ? person.email : "email missing"}
                     gender={person.gender ? person.gender : "gender missing"}
                     occupation = {person.occupation ? person.occupation : "occupation missing"}
-                    purpose = {person.purpose? person.purpose : "N/A"}
+                    lookingFor = {person.lookingFor? person.lookingFor : "N/A"}
                     image = {person.image ? person.image : "/room7.jpg"}
                     unmatchHandler = { async ()=> {
                         const res = await await axios.patch("http://localhost:5000/matching/unmatch/",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
