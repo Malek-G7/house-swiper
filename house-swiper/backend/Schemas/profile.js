@@ -25,7 +25,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    purpose: {
+    lookingFor: {
         type: String,
         required: false
     },

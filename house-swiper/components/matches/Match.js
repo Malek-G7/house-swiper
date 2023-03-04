@@ -20,7 +20,7 @@ return(
                 gender : {props.gender}
                 </div>
                 <div>
-                looking for : {props.purpose}
+                looking for : {props.lookingFor}
                 </div>
             </div>
             <div className={styles.textContainer}>

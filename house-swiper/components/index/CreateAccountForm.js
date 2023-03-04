@@ -14,7 +14,7 @@ export default function CreateAccountForm() {
         age: "",
         gender: "",
         occupation: "",
-        purpose: "",
+        lookingFor: "",
         description: "",
     });
 
@@ -25,7 +25,7 @@ export default function CreateAccountForm() {
         age: inputValues.age,
         gender: inputValues.gender,
         occupation: inputValues.occupation,
-        purpose: inputValues.purpose,
+        lookingFor: inputValues.lookingFor,
         description: inputValues.description,
         }
 
@@ -38,8 +38,8 @@ export default function CreateAccountForm() {
         formData.append("gender", inputValues.gender)
         formData.append("occupation", inputValues.occupation)
         formData.append("username", inputValues.username)
-        formData.append("decription", inputValues.description)
-        formData.append("purpose", inputValues.purpose)
+        formData.append("description", inputValues.description)
+        formData.append("lookingFor", inputValues.lookingFor)
         formData.append("image", file)
         await axios.post("http://localhost:5000/profiles/register", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         window.location = window.location
@@ -81,11 +81,11 @@ export default function CreateAccountForm() {
                 </div>
                 <div className={styles.inputWrapper}>
                     <label>What brings you here :D </label><br></br>
-                    <select name="reason" id="reason" value={inputValues.purpose} onChange={
-                        (e) => setInputValues({ ...inputValues, purpose: e.target.value })
+                    <select name="reason" id="reason" value={inputValues.lookingFor} onChange={
+                        (e) => setInputValues({ ...inputValues, lookingFor: e.target.value })
                     } required>
                         <option>Select an option</option>
-                        <option value="looking">I am looking for a house or room</option>
+                        <option value="accommodation">I am looking for a house or room</option>
                         <option value="leasing">I have a house or room I want to rent</option>
                     </select>
                 </div>

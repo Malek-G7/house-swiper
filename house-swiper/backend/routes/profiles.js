@@ -74,6 +74,9 @@ router.get('/', async (req,res) => {
             let getAllProfiles = await Profile.find({ _id: { $nin: [req.session.passport.user] } }) // returns all profile except current user 
             const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
             for(const profile of getAllProfiles){
+                if(profile.lookingFor== user.lookingFor){
+                    getAllProfiles = getAllProfiles.filter(filteredProfiles => filteredProfiles._id != profile._id );
+                }
                 for(const likedUserID of user.likedUsers){
                     if(profile. _id.toHexString()==likedUserID){
                         getAllProfiles = getAllProfiles.filter(filteredProfiles => filteredProfiles._id != likedUserID );
@@ -159,7 +162,7 @@ router.post('/register', upload.single("image") , async (req,res) => {
         age: req.body.age,
         gender:req.body.gender,
         occupation:req.body.occupation,
-        purpose:req.body.purpose,
+        lookingFor:req.body.lookingFor,
         description:req.body.description,
         image:imageName,
         hash: hash,
@@ -197,8 +200,8 @@ router.patch('/', getProfile ,async (req,res) =>{
     if(req.body.image != null){
         res.profile.image = req.body.image
     }
-    if(req.body.purpose != null){
-        res.profile.purpose = req.body.purpose
+    if(req.body.lookingFor != null){
+        res.profile.lookingFor = req.body.lookingFor
     }
     if(req.body.description != null){
         res.profile.description = req.body.description
