@@ -46,9 +46,15 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 // router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
 router.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user) => {
-
-        req.logIn(user, (err) => {
-            console.log(req.user);
+        req.logIn(user, async (err) => {
+            const location = {
+                lat : req.body.lat,
+                long : req.body.long
+            }
+            await Profile.findByIdAndUpdate(req.session.passport.user,
+                { "$set": { "location": location } },
+                { "new": true, "upsert": true },
+            );
             res.end()
         });
 

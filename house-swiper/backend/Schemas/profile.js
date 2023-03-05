@@ -47,7 +47,11 @@ const profileSchema = new mongoose.Schema({
     }],
     matchedUsers:[{
         type : String
-    }]
+    }],
+    location : {
+        lat : {type : String},
+        long : {type : String}
+    }
 })
 
 module.exports = mongoose.model('profile',profileSchema)

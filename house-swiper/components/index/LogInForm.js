@@ -3,8 +3,7 @@ import { useState } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
 
-export default function LogInForm() {
-
+export default function LogInForm(props) {
     const router = useRouter()
     
     const [inputValues, setInputValues] = useState({
@@ -14,7 +13,9 @@ export default function LogInForm() {
 
     const logInData = {
         username: inputValues.username,
-        password: inputValues.password
+        password: inputValues.password,
+        lat : props.lat,
+        long : props.long
     }
 
     async function logInHandler(event) {

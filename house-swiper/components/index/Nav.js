@@ -4,8 +4,8 @@ import 'reactjs-popup/dist/index.css';
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
 
-export  default function Nav(){
-    
+export  default function Nav(props){
+
     return (
     <nav className={styles.navstyle}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>
@@ -17,7 +17,7 @@ export  default function Nav(){
             <CreateAccountForm />
         </Popup>
         <Popup trigger={<button className= {styles.buttons}>Log in</button>}  modal="true">
-        <LogInForm />
+        <LogInForm lat = {props.lat} long = {props.long}/>
         </Popup>
         </div>
       </nav>
