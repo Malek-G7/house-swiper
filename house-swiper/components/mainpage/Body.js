@@ -13,7 +13,7 @@ export default function Body(props) {
   const [profiles, setProfiles] = useState([]);
   const router = useRouter();
   const [cards, setCards] = useState([]);
-
+  const [reload,setReload] = useState(true)
   // const cards = cardDummyData.map((e) => {
   //     return <Card description={e.description} img = {e.img} handleClick = {() => setCardIterator(cardIterator + 1)} ></Card>
   // })
@@ -80,16 +80,18 @@ export default function Body(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [reload]);
+
   const getLocationValue = async (e, value) => {
     const response = await axios.post(
-      "http://localhost:5000/profiles/locationFilter",
+      "http://localhost:5000/profiles/setLocationFilter",
       { radius: value },
       { withCredentials: true },
       { headers: { "Content-Type": "application/json" } }
     );
     const data = response.data;
     console.log(data);
+    setReload(prev => !prev)
   };
   return (
     <div className={styles.container}>
@@ -106,6 +108,8 @@ export default function Body(props) {
             <Slider
               defaultValue={70}
               aria-label="Small"
+              max={200}
+              min={10}
               valueLabelDisplay="auto"
               onChange={getLocationValue}
             />
