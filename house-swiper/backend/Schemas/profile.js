@@ -51,6 +51,9 @@ const profileSchema = new mongoose.Schema({
     location : {
         lat : {type : String},
         long : {type : String}
+    },
+    locationFilter : {
+        type : String
     }
 })
 

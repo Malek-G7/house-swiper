@@ -109,7 +109,13 @@ router.get('/', async (req,res) => {
     }
      
 })
-
+router.post("/setLocationFilter",async (req,res,next)=>{
+    if (req.isAuthenticated()){
+        console.log(req.body.radius)
+        const user = await Profile.findOneAndUpdate({ _id: [req.session.passport.user] },{locationFilter:req.body.radius}) 
+        res.sendStatus(200)
+    }
+})
 router.get('/matches', async(req,res) => {
     if (req.isAuthenticated()){
         const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
