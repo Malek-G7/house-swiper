@@ -52,6 +52,7 @@ export default function Body(props) {
                 occupation={
                   person.occupation ? person.occupation : "occupation missing"
                 }
+                distance={person.distance ? person.distance : "location missing"}
                 image={person.image ? person.image : "/room7.jpg"}
                 handleClickRight={async () => {
                   const res = await axios.patch(
