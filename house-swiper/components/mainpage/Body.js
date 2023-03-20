@@ -3,20 +3,19 @@ import profileDummyData from "./profiledummydata";
 import cardDummyData from "./cardDummyData";
 import Card from "./Card.js";
 import EndCard from "./EndCard.js";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef ,useContext} from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import swal from "sweetalert";
 import { Slider } from "@mui/material";
-export default function Body(props) {
+import {LocationContext}  from "../../store/location-context";
+export default function Body() {
   const [cardIterator, setCardIterator] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const router = useRouter();
   const [cards, setCards] = useState([]);
   const [reload,setReload] = useState(true)
-  // const cards = cardDummyData.map((e) => {
-  //     return <Card description={e.description} img = {e.img} handleClick = {() => setCardIterator(cardIterator + 1)} ></Card>
-  // })
+  const {latitude,longitude} = useContext(LocationContext)
 
   function editProfileHandler() {
     router.push("./editProfile");
@@ -37,6 +36,7 @@ export default function Body(props) {
         console.log(data);
         setCards(
           data.map((person, index) => {
+            const distance = getDistanceFromLatLonInKm(latitude,longitude,person.location.lat,person.location.long)
             return (
               <Card
                 key={index}
@@ -52,7 +52,7 @@ export default function Body(props) {
                 occupation={
                   person.occupation ? person.occupation : "occupation missing"
                 }
-                distance={person.distance ? person.distance : "location missing"}
+                distance={distance}
                 image={person.image ? person.image : "/room7.jpg"}
                 handleClickRight={async () => {
                   const res = await axios.patch(
@@ -94,6 +94,23 @@ export default function Body(props) {
     console.log(data);
     setReload(prev => !prev)
   };
+  function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
   return (
     <div className={styles.container}>
       <div className={styles.profile}>

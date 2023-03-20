@@ -1,11 +1,12 @@
 import styles from "../../styles/forms.module.css"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
+import { LocationContext } from "../../store/location-context"
 
-export default function LogInForm(props) {
+export default function LogInForm() {
     const router = useRouter()
-    
+    const {latitude,longitude} = useContext(LocationContext)
     const [inputValues, setInputValues] = useState({
         username: "",
         password: ""
@@ -14,8 +15,8 @@ export default function LogInForm(props) {
     const logInData = {
         username: inputValues.username,
         password: inputValues.password,
-        lat : props.lat,
-        long : props.long
+        lat : latitude,
+        long : longitude
     }
 
     async function logInHandler(event) {
