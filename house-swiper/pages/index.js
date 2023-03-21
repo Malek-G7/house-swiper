@@ -6,21 +6,11 @@ import HomeImage from '../components/index/homeImage'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const [latitude,setLat] = useState()
-  const [longitude,setLong] = useState()
-
-  useEffect(()=>{
-      if(navigator.geolocation){
-          navigator.geolocation.getCurrentPosition(function(position) {
-          setLat(position.coords.latitude)
-          setLong(position.coords.longitude)
-     });
-    }    
-  },[])
+  
   
   return (
     <div >
-      <Nav lat = {latitude}  long = {longitude} />
+      <Nav />
       <HomeImage src = "/houseSwiperHomePagePic.JPG" />
     </div>
   )
