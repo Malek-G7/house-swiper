@@ -52,7 +52,7 @@ export default function Body() {
                 occupation={
                   person.occupation ? person.occupation : "occupation missing"
                 }
-                distance={distance}
+                distance={Math.ceil(distance)}
                 image={person.image ? person.image : "/room7.jpg"}
                 handleClickRight={async () => {
                   const res = await axios.patch(
