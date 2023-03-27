@@ -116,6 +116,21 @@ router.get('/', async (req,res) => {
     }
      
 })
+
+router.get("/getEditProfileDetails",async (req,res,next)=>{
+    if(req.isAuthenticated()){
+        const profile = await Profile.findOne({ _id: [req.session.passport.user] }) 
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key : profile.image
+        } 
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(s3,command)
+        profile.image = url
+        console.log("user is "+ profile)
+        res.send(profile);
+    }
+})
 router.post("/setLocationFilter",async (req,res,next)=>{
     if (req.isAuthenticated()){
         console.log(req.body.radius)

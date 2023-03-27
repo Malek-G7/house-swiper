@@ -6,16 +6,14 @@ export default function ProfileDetails(props){
     return(
         <div className = {styles.container}>
             <div>
-                <p>Image: {props.img}</p>
-                <Image src = "/houseSwiperHomePagePic.JPG" width = "500px" height= "500px"></Image>
+                <p>Image: </p>
+                <img src = {props.img} width = "500px" height= "500px"></img>
                 <button className = {body.buttons}>edit image</button>
             </div>
             <div>
-                <p>Description: {props.description}</p>
+                <p>Description: {props.desc}</p>
                 <button className = {body.buttons}>edit description</button>
             </div>
         </div>
     )
-
-
 }
