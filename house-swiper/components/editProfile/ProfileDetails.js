@@ -6,7 +6,6 @@ import axios from "axios"
 export default function ProfileDetails(props){
     const [file, setFile] = useState()
     const [bio,setBio] = useState("")
-    const [refresh,setRefresh] = useState(true)
 
     async function editProfileHandler(event){
         event.preventDefault()
@@ -14,7 +13,8 @@ export default function ProfileDetails(props){
         formData.append("bio",bio)
         formData.append("image", file)
         console.log(formData)
-        await axios.post("http://localhost:5000/profiles/submitNewProfile", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        await axios.patch("http://localhost:5000/profiles/submitNewProfile", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        props.refreshParent()
     }
    
     return(

@@ -8,7 +8,11 @@ export default function Body(){
 
 const [image,setImage] = useState(0)
 const [description,setDescription] = useState(0)
+const [refresh,setRefresh] = useState(0)
 
+function refreshPage (){
+    setRefresh(refresh + 1 ) 
+}
 const getData = async () => {
     try {
         const res = await axios.get("http://localhost:5000/profiles/getEditProfileDetails",{ withCredentials: true },
@@ -23,11 +27,11 @@ const getData = async () => {
 
 useEffect(()=>{
     getData();
-},[])
+},[refresh])
 
 return(
     <div className = {styles.container}>
-        <ProfileDetails img = {image} desc = {description} ></ProfileDetails>
+        <ProfileDetails img = {image} desc = {description} refreshParent = {refreshPage} ></ProfileDetails>
     </div>
 )
 
