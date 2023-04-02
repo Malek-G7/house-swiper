@@ -168,6 +168,24 @@ router.get('/:id',getProfile,(req,res) => {
     res.send(res.profile)
 })
 
+router.post('/submitNewProfile',upload.single("image"),async (req,res)=>{
+    const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
+    
+    const imageName = randomImageName()
+    const params = {
+        Bucket : bucketName,
+       // Key: req.file.originalname,
+        Key: imageName,
+        Body : buffer,
+        ContentType: req.file.mimetype
+    }
+
+    const command = new PutObjectCommand(params)
+    s3.send(command)
+    console.log(req.body.bio)
+    res.sendStatus(200)
+})
+
 router.post('/register', upload.single("image") , async (req,res) => {
 
     const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
