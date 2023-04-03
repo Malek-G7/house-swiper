@@ -9,6 +9,7 @@ import axios from "axios";
 import swal from "sweetalert";
 import { Slider } from "@mui/material";
 import {LocationContext}  from "../../store/location-context";
+import Image from "next/image";
 export default function Body() {
   const [cardIterator, setCardIterator] = useState(0);
   const [profiles, setProfiles] = useState([]);
@@ -112,14 +113,21 @@ export default function Body() {
     return deg * (Math.PI/180)
   }
   return (
+    <div className={styles.background}>
+    <Image
+    src="/autumn-2021154_960_720.jpg"
+    alt="Background image"
+    layout="fill"
+    />
     <div className={styles.container}>
+      <div className={styles.cards}>
+        {cardIterator < cards.length ? (
+          cards[cardIterator]
+        ) : (
+          <EndCard></EndCard>
+        )}
+      </div>
       <div className={styles.profile}>
-        <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
-          <h1>{profileDummyData.title}</h1>
-          <h2>{profileDummyData.description}</h2>
-          <p>Name : </p>
-          <p>Age : </p>
-        </div>
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
           <h2>Set location filter</h2>
           <div>
@@ -133,7 +141,6 @@ export default function Body() {
             />
           </div>
         </div>
-        <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
           <div className={styles.editButton}>
             <button className={styles.buttons} onClick={editProfileHandler}>
               edit profile
@@ -144,15 +151,8 @@ export default function Body() {
               show matches
             </button>
           </div>
-        </div>
       </div>
-      <div className={styles.cards}>
-        {cardIterator < cards.length ? (
-          cards[cardIterator]
-        ) : (
-          <EndCard></EndCard>
-        )}
-      </div>
+    </div>
     </div>
   );
 }
