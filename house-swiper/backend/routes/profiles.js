@@ -116,6 +116,21 @@ router.get('/', async (req,res) => {
     }
      
 })
+
+router.get("/getEditProfileDetails",async (req,res,next)=>{
+    if(req.isAuthenticated()){
+        const profile = await Profile.findOne({ _id: [req.session.passport.user] }) 
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key : profile.image
+        } 
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(s3,command)
+        profile.image = url
+        console.log("user is "+ profile)
+        res.send(profile);
+    }
+})
 router.post("/setLocationFilter",async (req,res,next)=>{
     if (req.isAuthenticated()){
         console.log(req.body.radius)
@@ -151,6 +166,37 @@ router.get('/matches', async(req,res) => {
 
 router.get('/:id',getProfile,(req,res) => {
     res.send(res.profile)
+})
+
+router.patch('/submitNewProfile',upload.single("image"),async (req,res)=>{
+    if(req.isAuthenticated()){
+        const user = await Profile.findOne({ _id: [req.session.passport.user] }) 
+        const oldImageName = user.image
+        const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
+        const imageName = randomImageName()
+        const params = {
+            Bucket : bucketName,
+           // Key: req.file.originalname,
+            Key: imageName,
+            Body : buffer,
+            ContentType: req.file.mimetype
+        }
+        const command = new PutObjectCommand(params)
+        s3.send(command)
+
+        const newProfile = await Profile.findByIdAndUpdate({ _id: [req.session.passport.user] },{image : imageName, description : req.body.bio})
+        deleteParams = {
+            Bucket : bucketName,
+            Key : oldImageName,
+        }
+        const deleteImageCommand = new DeleteObjectCommand(deleteParams)
+        s3.send(deleteImageCommand)
+
+        res.sendStatus(200)
+    }
+    else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource' });
+    }
 })
 
 router.post('/register', upload.single("image") , async (req,res) => {
