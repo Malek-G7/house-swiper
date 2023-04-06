@@ -7,7 +7,8 @@ const multer = require ("multer")
 const { S3Client } = require("@aws-sdk/client-s3")
 const { PutObjectCommand ,GetObjectCommand, DeleteObjectCommand} = require("@aws-sdk/client-s3")
 const {getSignedUrl} = require("@aws-sdk/s3-request-presigner")
-const dotenv = require("dotenv").config
+const dotenv = require("dotenv")
+dotenv.config()
 const crypto = require("crypto")
 const sharp = require("sharp")
 const storage = multer.memoryStorage()
@@ -28,10 +29,10 @@ router.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50
 // Accept a single file with the name fieldname. The single file will be stored in req.file.
 upload.single("image")
 
-const bucketName = 'house-swiper'
-const bucketRegion = 'eu-west-1'
-const accessKey =  ''
-const secretAccessKey = ''
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+const accessKey =  process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
 
 const s3 = new S3Client({
     credentials:{

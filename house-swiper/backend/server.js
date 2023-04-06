@@ -10,9 +10,11 @@ const app = express()
 const cookieParser = require("cookie-parser")
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+const dotenv = require("dotenv")
+dotenv.config()
 
 mongoose.connect(
-    "mongodb+srv://malek7:<password>@houseswiper.oyq4unw.mongodb.net/?retryWrites=true&w=majority",
+    process.env.DB_URI,
     {
         useNewUrlParser: true
     }
