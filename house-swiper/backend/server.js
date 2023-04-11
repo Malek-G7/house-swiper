@@ -31,7 +31,7 @@ db.once('open', () => {
 })
 
 app.use(cors({
-    origin : "http://localhost:3000",
+    origin : "http://3.208.246.5:3000",
     credentials:  true
 }))
 
@@ -65,6 +65,6 @@ app.get("/",(req,res) => {
 })
 // revisit later
 
-app.listen(5000, () => {
+app.listen(5000,'0.0.0.0', () => {
     console.log("server started on port 5000 !")
 })

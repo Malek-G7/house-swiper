@@ -41,7 +41,7 @@ export default function CreateAccountForm() {
         formData.append("description", inputValues.description)
         formData.append("lookingFor", inputValues.lookingFor)
         formData.append("image", file)
-        await axios.post("http://localhost:5000/profiles/register", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        await axios.post("http://3.208.246.5:5000/profiles/register", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         window.location = window.location
         // try {
         //     const response = await fetch("/api/CreateAccount", {

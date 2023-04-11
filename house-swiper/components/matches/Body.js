@@ -16,7 +16,7 @@ export default function Body(){
     useEffect( () => { 
         async function fetchData() {
             try {
-            const response = await axios.get("http://localhost:5000/profiles/matches",{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})     
+            const response = await axios.get("http://3.208.246.5:5000/profiles/matches",{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})     
             const data = await response.data
             console.log(data)
             setProfiles(settingProfiles(data))
@@ -43,7 +43,7 @@ export default function Body(){
                     lookingFor = {person.lookingFor? person.lookingFor : "N/A"}
                     image = {person.image ? person.image : "/room7.jpg"}
                     unmatchHandler = { async ()=> {
-                        const res = await await axios.patch("http://localhost:5000/matching/unmatch/",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
+                        const res = await await axios.patch("http://3.208.246.5:5000/matching/unmatch/",{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
                         if(res.data == "success"){
                             setUpdateMatches(prev => !prev)
                         }

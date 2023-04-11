@@ -29,7 +29,7 @@ export default function ChatPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const getTexts = await axios.get("http://localhost:5000/messaging/getChats", { withCredentials: true, params: { talkingTo: userID }, headers: { 'Content-Type': "application/json" } })
+                const getTexts = await axios.get("http://3.208.246.5:5000/messaging/getChats", { withCredentials: true, params: { talkingTo: userID }, headers: { 'Content-Type': "application/json" } })
                 const data = await getTexts.data
                 console.log(data)
                 setMesagges(settingMessages(data.messages))
@@ -38,20 +38,20 @@ export default function ChatPage() {
             }
         }
         fetchData()
-       // const interval = setInterval(() => {
-           // setFlag(prev => !prev)
-        //   fetchData();
-       // }, 1000);
-       // return() => {
-       //     clearInterval(interval)
-       // }
-        // setMesagges(settingMessages(texts))
+        const interval = setInterval(() => {
+            setFlag(prev => !prev)
+           fetchData();
+        }, 1500);
+        return() => {
+           clearInterval(interval)
+        }
+         setMesagges(settingMessages(texts))
     }, [])
 
     async function sendMessageHandler(event) {
         event.preventDefault()
         if(chatboxContent.length != 0){
-            const response = await axios.post("http://localhost:5000/messaging/sendChat", { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
+            const response = await axios.post("http://3.208.246.5:5000/messaging/sendChat", { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
             console.log(response)
         }        
     }

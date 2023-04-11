@@ -15,7 +15,7 @@ function refreshPage (){
 }
 const getData = async () => {
     try {
-        const res = await axios.get("http://localhost:5000/profiles/getEditProfileDetails",{ withCredentials: true },
+        const res = await axios.get("http://3.208.246.5:5000/profiles/getEditProfileDetails",{ withCredentials: true },
         { headers: { "Content-Type": "application/json" } })
         const profile = res.data
         setImage(profile.image)

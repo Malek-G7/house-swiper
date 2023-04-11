@@ -14,14 +14,7 @@ const sharp = require("sharp")
 const storage = multer.memoryStorage()
 /* Multer accepts an options object, the most basic of which is the dest property, which tells Multer where to upload the files. In case you omit the options object, the files will be kept in memory and never written to disk.*/ 
 const upload = multer({ storage: storage })
-const cors = require("cors")
 const passport = require('passport');
-
-router.use(cors({
-    origin : "http://localhost:3000",
-    credentials:  true
-}))
-
 
 
 router.use(express.json({limit: '50mb'}));

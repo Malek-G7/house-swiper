@@ -13,7 +13,7 @@ export default function ProfileDetails(props){
         formData.append("bio",bio)
         formData.append("image", file)
         console.log(formData)
-        await axios.patch("http://localhost:5000/profiles/submitNewProfile", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        await axios.patch("http://3.208.246.5:5000/profiles/submitNewProfile", formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         props.refreshParent()
     }
    
