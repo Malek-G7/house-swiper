@@ -34,7 +34,7 @@ export default function LogInForm() {
         //  } catch (error) {
         //    alert(error)  
         //  }
-        await axios.post("http://localhost:5000/profiles/login", logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
+        await axios.post("3.208.246.5:5000/profiles/login", logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
         router.push("/mainpage") 
     }
 
