@@ -65,6 +65,6 @@ app.get("/",(req,res) => {
 })
 // revisit later
 
-app.listen(5000, '3.208.246.5',() => {
+app.listen(5000, '0.0.0.0',() => {
     console.log("server started on port 5000 !")
 })

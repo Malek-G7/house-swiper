@@ -28,7 +28,7 @@ export default function Body() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "3.208.246.5:5000/profiles/",
+          "http://3.208.246.5:5000/profiles/",
           { withCredentials: true },
           { headers: { "Content-Type": "application/json" } }
         );
