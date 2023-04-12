@@ -6,7 +6,7 @@ export default function Nav() {
     const router = useRouter()
 
     async function logOutHandler(){
-        await axios.delete("http://localhost:5000/profiles/logout",{withCredentials:true})
+        await axios.delete(`http://${process.env.SERVER_URI}:5000/profiles/logout`,{withCredentials:true})
         router.push("/")
     }
     return (

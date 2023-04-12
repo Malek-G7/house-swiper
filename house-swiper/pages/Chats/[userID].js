@@ -29,7 +29,7 @@ export default function ChatPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const getTexts = await axios.get("http://localhost:5000/messaging/getChats", { withCredentials: true, params: { talkingTo: userID }, headers: { 'Content-Type': "application/json" } })
+                const getTexts = await axios.get(`http://${process.env.SERVER_URI}:5000/messaging/getChats`, { withCredentials: true, params: { talkingTo: userID }, headers: { 'Content-Type': "application/json" } })
                 const data = await getTexts.data
                 console.log(data)
                 setMesagges(settingMessages(data.messages))
@@ -51,7 +51,7 @@ export default function ChatPage() {
     async function sendMessageHandler(event) {
         event.preventDefault()
         if(chatboxContent.length != 0){
-            const response = await axios.post("http://localhost:5000/messaging/sendChat", { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
+            const response = await axios.post(`http://${process.env.SERVER_URI}:5000/messaging/sendChat`, { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
             console.log(response)
         }        
     }
