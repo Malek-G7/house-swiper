@@ -113,15 +113,22 @@ export default function Body() {
   }
   return (
     <div className={styles.container}>
+            <div className={styles.cards}>
+        {cardIterator < cards.length ? (
+          cards[cardIterator]
+        ) : (
+          <EndCard></EndCard>
+        )}
+      </div>
       <div className={styles.profile}>
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
-          <h1>{profileDummyData.title}</h1>
-          <h2>{profileDummyData.description}</h2>
-          <p>Name : </p>
-          <p>Age : </p>
+          <h1>Welcome to House Swiper! :) </h1>
+          <h2>find your next roommate house or whatever youre looking for here !</h2>
+          <p>at the moment development of the swiping functionality is not yet complete</p>
+          <p>Please use the X and Heart shaped buttons to like or not like a user</p>
         </div>
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
-          <h2>Set location filter</h2>
+          <h2>Show users within KM</h2>
           <div>
             <Slider
               defaultValue={70}
@@ -136,22 +143,15 @@ export default function Body() {
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
           <div className={styles.editButton}>
             <button className={styles.buttons} onClick={editProfileHandler}>
-              edit profile
+              edit my profile
             </button>
           </div>
           <div className={styles.editButton}>
             <button className={styles.buttons} onClick={matchesHandler}>
-              show matches
+              my matches
             </button>
           </div>
         </div>
-      </div>
-      <div className={styles.cards}>
-        {cardIterator < cards.length ? (
-          cards[cardIterator]
-        ) : (
-          <EndCard></EndCard>
-        )}
       </div>
     </div>
   );

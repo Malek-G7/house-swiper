@@ -1,11 +1,14 @@
 import styles from "./ProfileDetails.module.css"
 import body from "./Body.module.css"
 import Image from 'next/image'
+import { useRouter } from "next/router";
 import { useState } from "react"
 import axios from "axios"
+
 export default function ProfileDetails(props){
     const [file, setFile] = useState()
     const [bio,setBio] = useState("")
+    const router = useRouter()
 
     async function editProfileHandler(event){
         event.preventDefault()
@@ -15,6 +18,10 @@ export default function ProfileDetails(props){
         console.log(formData)
         await axios.patch(`http://${process.env.SERVER_URI}:5000/profiles/submitNewProfile`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         props.refreshParent()
+        window.location = window.location
+       // in case this doesnt work just push back to mainpage
+       // router.push("/mainpage")
+
     }
    
     return(
