@@ -31,7 +31,7 @@ db.once('open', () => {
 })
 
 app.use(cors({
-    origin : "http://3.208.246.5/",
+    origin : "http://3.208.246.5:3000",
     credentials:  true
 }))
 
