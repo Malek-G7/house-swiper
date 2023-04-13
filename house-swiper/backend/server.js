@@ -35,6 +35,14 @@ app.use(cors({
     credentials:  true
 }))
 
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+  uri: process.env.DB_URI,
+  collection: 'sessions'
+});
+
+
 app.use(session({
     secret: "secretcode",
     resave: false,
@@ -42,8 +50,10 @@ app.use(session({
     // store: db,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
-    }
+    },
+    store: store
 }));
+
 app.use((req, res, next) => {
     console.log(req.session);
     next();
