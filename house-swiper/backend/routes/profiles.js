@@ -17,11 +17,6 @@ const upload = multer({ storage: storage })
 const cors = require("cors")
 const passport = require('passport');
 
-router.use(cors({
-    origin : "http://localhost:3000",
-    credentials:  true
-}))
-
 
 
 router.use(express.json({limit: '50mb'}));
