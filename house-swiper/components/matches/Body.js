@@ -10,7 +10,7 @@ export default function Body(){
     const router = useRouter()
 
     function buttonHandler(){
-        router.push("/mainpage")
+        router.push("/")
     }
 
     useEffect( () => { 

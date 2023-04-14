@@ -30,12 +30,12 @@ export default function LogInForm() {
         //              "content-type" : "application/json"
         //          }
         //     })    
-        // router.push("/mainpage") 
+        // router.push("/") 
         //  } catch (error) {
         //    alert(error)  
         //  }
         await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/login`, logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
-        router.push("/mainpage") 
+        router.push("/") 
     }
 
     return (

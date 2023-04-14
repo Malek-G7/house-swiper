@@ -1,18 +1,41 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Nav from '../components/index/Nav'
-import HomeImage from '../components/index/homeImage'
-import { useEffect, useState } from 'react'
 
-export default function Home() {
-  
-  
+import Nav from '../components/mainpage/Nav'
+import Body from '../components/mainpage/Body'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+export default function MainPage(props) {
+
+  const router = useRouter()
+  const isSignedIn = async () => {
+    try {
+        const res = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/isSignedIn`,{ withCredentials: true },
+        { headers: { "Content-Type": "application/json" } })
+    } catch (error) {
+      router.push("/login")   
+    }
+}
+  useEffect(()=>{
+    isSignedIn()
+  },[])
+
   return (
-    <div classname = {styles.home}>
-      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+    <div >
       <Nav />
-      <HomeImage src = "/houseSwiperHomePagePic.JPG" />
+      <Body data = {props.text}/>
     </div>
   )
 }
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+
+//   const res = await fetch(`http://localhost:5000/`)
+//   const data = await res.json()
+
+//   // Pass data to the page via props
+//   return {
+//      props: {
+//         text : data.text 
+//      } 
+//     }
+// }

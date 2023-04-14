@@ -19,8 +19,8 @@ export default function ProfileDetails(props){
         await axios.patch(`http://${process.env.SERVER_URI}:5000/profiles/submitNewProfile`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         props.refreshParent()
         window.location = window.location
-       // in case this doesnt work just push back to mainpage
-       // router.push("/mainpage")
+       // in case this doesnt work just push back to main
+       // router.push("/")
 
     }
    

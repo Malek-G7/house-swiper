@@ -113,6 +113,15 @@ router.get('/', async (req,res) => {
      
 })
 
+router.get("/isSignedIn",async (req,res,next)=>{
+    if(req.isAuthenticated()){
+        res.status(200).json({ msg: 'You are signed in' });
+    }
+    else {
+        res.status(401).json({ msg: 'You are not signed in' });
+    }
+})
+
 router.get("/getEditProfileDetails",async (req,res,next)=>{
     if(req.isAuthenticated()){
         const profile = await Profile.findOne({ _id: [req.session.passport.user] }) 
