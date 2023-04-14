@@ -26,6 +26,14 @@
     border-radius: 5px;
     font-family: "Lucida Console", "Courier New", monospace;
 }
+.nomatches{
+    text-align: center;
+    font-family: "Brush Script MT", "Courier New", monospace;
+    margin: 0;
+    margin-left: 100px;
+    line-height: 1.15;
+    font-size: 4rem;
+}
 .details{
     display: flex;
     justify-content: space-around;

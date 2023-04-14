@@ -1,6 +1,6 @@
 import axios from "axios"
 import { set } from "mongoose"
-import { useEffect, useState } from "react"
+import { useEffect, useState} from "react"
 import styles from "./Body.module.css"
 import ProfileDetails from "./ProfileDetails"
 

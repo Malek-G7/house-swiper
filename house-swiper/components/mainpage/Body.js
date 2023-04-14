@@ -14,6 +14,7 @@ export default function Body() {
   const [profiles, setProfiles] = useState([]);
   const router = useRouter();
   const [cards, setCards] = useState([]);
+  const [filter, setFilter] = useState(100);
   const [reload,setReload] = useState(true)
   const {latitude,longitude} = useContext(LocationContext)
 
@@ -92,6 +93,7 @@ export default function Body() {
     );
     const data = response.data;
     console.log(data);
+    setFilter(value)
     setReload(prev => !prev)
   };
   function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -113,18 +115,51 @@ export default function Body() {
   }
   return (
     <div className={styles.container}>
+            <div className={styles.cards}>
+        {cardIterator < cards.length ? (
+          cards[cardIterator]
+        ) : (
+          <EndCard></EndCard>
+        )}
+      </div>
       <div className={styles.profile}>
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
-          <h1>{profileDummyData.title}</h1>
-          <h2>{profileDummyData.description}</h2>
-          <p>Name : </p>
-          <p>Age : </p>
+          <h1 className={styles.welcome}>Welcome to House Swiper! :) </h1>
+          <h2>find your next roommate, house or whatever youre looking for here !</h2>
+          <p>at the moment development of the swiping functionality is not yet complete</p>
+          <p>Please use the <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class={styles.icon}
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg> and <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class={styles.icon}
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg> buttons to like or dislike a user</p>
         </div>
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
-          <h2>Set location filter</h2>
+          <h2 className={styles.moretext}>Show users within {filter} KM</h2>
           <div>
             <Slider
-              defaultValue={70}
+              defaultValue={100}
               aria-label="Small"
               max={200}
               min={10}
@@ -136,22 +171,15 @@ export default function Body() {
         <div style={{ backgroundColor: "#fdf3f1", borderRadius: 30 }}>
           <div className={styles.editButton}>
             <button className={styles.buttons} onClick={editProfileHandler}>
-              edit profile
+              edit my profile
             </button>
           </div>
           <div className={styles.editButton}>
             <button className={styles.buttons} onClick={matchesHandler}>
-              show matches
+              my matches
             </button>
           </div>
         </div>
-      </div>
-      <div className={styles.cards}>
-        {cardIterator < cards.length ? (
-          cards[cardIterator]
-        ) : (
-          <EndCard></EndCard>
-        )}
       </div>
     </div>
   );
