@@ -59,10 +59,10 @@ export default function Body(){
     return(
         <div>
            <div>
-                {profiles}
+                {profiles.length ? profiles : <h1 className={styles.nomatches}>Looks like you have no matches yet :(</h1>}
             </div>
             <div className = {styles.editButton}>
-                <button className = {styles.buttons} onClick = {buttonHandler} >go back to swiping !</button>
+                <button className = {styles.buttons} onClick = {buttonHandler} >go back to swiping</button>
             </div>
         </div>
     )
