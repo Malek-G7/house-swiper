@@ -4,7 +4,7 @@ import styles from '../../styles/Home.module.css'
 export default function HomeImage(props){
     return(
     <div className={styles.imageContainer}>
-        <Image src = {props.src} width = "2000px" height="1000px" />
-      </div>   
+      <img src = {props.src} width = "100%" height="100%" />
+    </div>   
     )
 }

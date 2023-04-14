@@ -9,7 +9,8 @@ export default function Home() {
   
   
   return (
-    <div >
+    <div classname = {styles.home}>
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
       <Nav />
       <HomeImage src = "/houseSwiperHomePagePic.JPG" />
     </div>
