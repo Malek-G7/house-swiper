@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import axios from "axios"
 import styles from "./chats.module.css"
 import Nav from "/components/matches/Nav.js"
@@ -10,8 +10,6 @@ export default function ChatPage() {
     const [messages, setMesagges] = useState([])
     const [flag, setFlag] = useState(true)
     const [chatboxContent, setChatBoxContent] = useState("")
-
-    const texts = ["dsefwefwe", "jiosdjciosjfco", "sdhiosfhoi"]
 
     function settingMessages(data) {
         return (
@@ -26,6 +24,7 @@ export default function ChatPage() {
             </div>          
         )
     }
+   
     useEffect(() => {
         async function fetchData() {
             try {
@@ -38,14 +37,13 @@ export default function ChatPage() {
             }
         }
         fetchData()
-       // const interval = setInterval(() => {
-           // setFlag(prev => !prev)
-        //   fetchData();
-       // }, 1000);
-       // return() => {
-       //     clearInterval(interval)
-       // }
-        // setMesagges(settingMessages(texts))
+        const interval = setInterval(() => {
+            setFlag(prev => !prev)
+           fetchData();
+        }, 1000);
+       return() => {
+           clearInterval(interval)
+        }
     }, [])
 
     async function sendMessageHandler(event) {
@@ -53,16 +51,13 @@ export default function ChatPage() {
         if(chatboxContent.length != 0){
             const response = await axios.post(`http://${process.env.SERVER_URI}:5000/messaging/sendChat`, { talkingTo: userID, message: chatboxContent }, { withCredentials: true }, { headers: { 'Content-Type': 'application/json' } })
             console.log(response)
+            setChatBoxContent("")
         }        
     }
     return (
         
         <div className={styles.page}>
             <Nav/>
-            <div>
-            <h1>you are talking to {userID}</h1>
-            </div>
-            
                 {messages}
             
             <div className={styles.chatBox}>

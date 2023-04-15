@@ -1,3 +1,4 @@
+import '../public/reset.css';
 import '../styles/globals.css'
 
 import { useContext ,useState, useEffect } from 'react'
