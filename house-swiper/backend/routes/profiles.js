@@ -208,7 +208,6 @@ router.patch('/submitNewProfile',upload.single("image"),async (req,res)=>{
 })
 
 router.post('/register', upload.single("image") , async (req,res) => {
-
     const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
     
     const imageName = randomImageName()
@@ -227,7 +226,10 @@ router.post('/register', upload.single("image") , async (req,res) => {
     
     const salt = saltHash.salt;
     const hash = saltHash.hash;
-
+    const coord = {
+        lat : req.body.lat,
+        long: req.body.long
+    }
     const profile = new Profile({
         email: req.body.email,
         password:req.body.password,
@@ -240,12 +242,16 @@ router.post('/register', upload.single("image") , async (req,res) => {
         image:imageName,
         hash: hash,
         salt: salt,
+        location : coord
     })
     try {
         const newProfile = await profile.save()
-         res.status(201).json(newProfile)
+        req.logIn(newProfile, async (err) => {
+            
+        });
+        res.sendStatus(200)
     } catch (error) {
-        res.status(400).json({
+        res.sendStatus(400).json({
             message : error.message
         })
     }
