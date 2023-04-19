@@ -16,7 +16,7 @@ export default function ChatPage() {
             <div className= {styles.outerMessagesContainer}>
             <ul className={styles.list}>
                 {data.map((messageContent, index) => (
-                    <li>
+                    <li key={index}>
                         <div className={messageContent.from == userID ? styles.receiver : styles.messages}>{messageContent.from} : {messageContent.message}</div>
                         <div></div>
                     </li>))}

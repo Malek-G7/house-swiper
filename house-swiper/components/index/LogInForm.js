@@ -3,6 +3,7 @@ import { useContext, useState } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
 import { LocationContext } from "../../store/location-context"
+import swal from "sweetalert";
 
 export default function LogInForm() {
     const router = useRouter()
@@ -26,9 +27,9 @@ export default function LogInForm() {
             router.push("/") 
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                alert("***the credentials you have entered are incorrect***")
+                swal("***the credentials you have entered are incorrect***")
             } else {
-                alert('An error occurred while fetching the data.')
+                swal('An error occurred while fetching the data.')
             }
         }
     }

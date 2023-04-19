@@ -3,6 +3,7 @@ import { useState,useContext } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
 import { LocationContext } from "../../store/location-context"
+import swal from "sweetalert";
 
 export default function CreateAccountForm() {
 
@@ -49,7 +50,7 @@ export default function CreateAccountForm() {
         formData.append("image", file)
         await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/register`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         //router.push("/")  
-        alert("you have successfully created a house swiper account !\n\rkindly log in using your credentials")
+        swal("you have successfully created a house swiper account !\n\rkindly log in using your credentials")
     }
 
     return (
