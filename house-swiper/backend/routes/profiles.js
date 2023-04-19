@@ -42,6 +42,9 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 // router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
 router.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user) => {
+        if (!user) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
         req.logIn(user, async (err) => {
             const location = {
                 lat : req.body.lat,
@@ -111,6 +114,15 @@ router.get('/', async (req,res) => {
         res.status(401).json({ msg: 'You are not authorized to view this resource' });
     }
      
+})
+
+router.get("/isSignedIn",async (req,res,next)=>{
+    if(req.isAuthenticated()){
+        res.status(200).json({ msg: 'You are signed in' });
+    }
+    else {
+        res.status(401).json({ msg: 'You are not signed in' });
+    }
 })
 
 router.get("/getEditProfileDetails",async (req,res,next)=>{
@@ -196,7 +208,6 @@ router.patch('/submitNewProfile',upload.single("image"),async (req,res)=>{
 })
 
 router.post('/register', upload.single("image") , async (req,res) => {
-
     const buffer = await sharp(req.file.buffer).resize({height: 500, width : 750, fit :"fill"}).toBuffer()
     
     const imageName = randomImageName()
@@ -215,7 +226,10 @@ router.post('/register', upload.single("image") , async (req,res) => {
     
     const salt = saltHash.salt;
     const hash = saltHash.hash;
-
+    const coord = {
+        lat : req.body.lat,
+        long: req.body.long
+    }
     const profile = new Profile({
         email: req.body.email,
         password:req.body.password,
@@ -228,12 +242,16 @@ router.post('/register', upload.single("image") , async (req,res) => {
         image:imageName,
         hash: hash,
         salt: salt,
+        location : coord
     })
     try {
         const newProfile = await profile.save()
-         res.status(201).json(newProfile)
+        req.logIn(newProfile, async (err) => {
+            
+        });
+        res.sendStatus(200)
     } catch (error) {
-        res.status(400).json({
+        res.sendStatus(400).json({
             message : error.message
         })
     }

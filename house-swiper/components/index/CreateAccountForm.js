@@ -1,12 +1,15 @@
 import styles from "../../styles/forms.module.css"
-import { useState } from "react"
+import { useState,useContext } from "react"
 import { useRouter } from 'next/router'
 import axios from "axios"
+import { LocationContext } from "../../store/location-context"
+import swal from "sweetalert";
 
 export default function CreateAccountForm() {
 
     const router = useRouter()
     const [file, setFile] = useState()
+    const {latitude,longitude} = useContext(LocationContext)
     const [inputValues, setInputValues] = useState({
         email: "",
         password: "",
@@ -16,6 +19,8 @@ export default function CreateAccountForm() {
         occupation: "",
         lookingFor: "",
         description: "",
+        lat : latitude,
+        long : longitude
     });
 
     const accountData = {
@@ -40,22 +45,12 @@ export default function CreateAccountForm() {
         formData.append("username", inputValues.username)
         formData.append("description", inputValues.description)
         formData.append("lookingFor", inputValues.lookingFor)
+        formData.append("lat", latitude)
+        formData.append("long", longitude)
         formData.append("image", file)
         await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/register`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
-        window.location = window.location
-        // try {
-        //     const response = await fetch("/api/CreateAccount", {
-        //         method : "POST",
-        //         body : JSON.stringify(accountData),
-        //         headers : {
-        //             "content-type" : "application/json"
-        //         }
-        //     })      
-        // } catch (error) {
-        //   alert(error)  
-        // }
-       //router.push("/")  
-     
+        //router.push("/")  
+        swal("you have successfully created a house swiper account !\n\rkindly log in using your credentials")
     }
 
     return (

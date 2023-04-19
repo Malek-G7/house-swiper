@@ -7,7 +7,7 @@ export default function Nav() {
 
     async function logOutHandler(){
         await axios.delete(`http://${process.env.SERVER_URI}:5000/profiles/logout`,{withCredentials:true})
-        router.push("/")
+        router.push("/login")
     }
     return (
         <nav className={styles.navstyle}>
