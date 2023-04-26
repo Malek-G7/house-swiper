@@ -9,12 +9,19 @@ export default function MainPage(props) {
   const router = useRouter()
   const isSignedIn = async () => {
     try {
-        const res = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/isSignedIn`,{ withCredentials: true },
-        { headers: { "Content-Type": "application/json" } })
+      const res = await axios.get('/api/IsSignedIn', {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if(res.status==401){
+        router.push('/login');
+      }
     } catch (error) {
-      router.push("/login")   
+      router.push('/login');
+      console.log(error)
     }
-}
+  };
   useEffect(()=>{
     isSignedIn()
   },[])

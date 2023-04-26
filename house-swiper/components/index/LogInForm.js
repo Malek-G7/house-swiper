@@ -19,20 +19,29 @@ export default function LogInForm() {
         lat : latitude,
         long : longitude
     }
-
+      
     async function logInHandler(event) {
         event.preventDefault()
         try {
-            await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/login`, logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
-            router.push("/") 
+          let response = await fetch('/api/Login', {
+            method: 'POST',
+            body: JSON.stringify(logInData),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+          })
+          response = await response.json()
+          console.log('JSON.stringify(resp from login form): ' + JSON.stringify(response))
+          router.push("/");
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                swal("***the credentials you have entered are incorrect***")
-            } else {
-                swal('An error occurred while fetching the data.')
-            }
+          if (error.response && error.response.status === 401) {
+            swal("***the credentials you have entered are incorrect***")
+          } else {
+            swal('An error occurred while fetching the data.')
+          }
         }
-    }
+      }
 
     return (
         <div className={styles.container}>

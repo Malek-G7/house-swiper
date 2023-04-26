@@ -5,10 +5,18 @@ import axios from 'axios'
 export default function Nav() {
     const router = useRouter()
 
-    async function logOutHandler(){
-        await axios.delete(`http://${process.env.SERVER_URI}:5000/profiles/logout`,{withCredentials:true})
-        router.push("/login")
-    }
+    async function logOutHandler() {
+        try {
+          const response = await fetch('/api/Logout', {
+            method: 'DELETE'
+          });
+          if (response.ok) {
+            router.push('/login');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }      
 
     function homeButton(){
         router.push("/")

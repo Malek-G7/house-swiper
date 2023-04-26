@@ -16,16 +16,19 @@ export default function Body(){
     useEffect( () => { 
         async function fetchData() {
             try {
-            const response = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/matches`,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})     
-            const data = await response.data
-            console.log(data)
-            setProfiles(settingProfiles(data))
-            }  catch (e) {
-                console.log("Error", e.stack);
-                console.log("Error", e.name);
-                console.log("Error", e.message);
-              }
-        }
+              const response = await axios.get("/api/Matches", {
+                withCredentials: true,
+                headers: { "Content-Type": "application/json" },
+              });
+              const data = await response.data;
+              console.log(data);
+              setProfiles(settingProfiles(data));
+            } catch (e) {
+              console.log("Error", e.stack);
+              console.log("Error", e.name);
+              console.log("Error", e.message);
+            }
+          }          
         fetchData();
     }, [updateMatches]);
    
@@ -43,10 +46,19 @@ export default function Body(){
                     lookingFor = {person.lookingFor? person.lookingFor : "N/A"}
                     image = {person.image ? person.image : "/room7.jpg"}
                     unmatchHandler = { async ()=> {
-                        const res = await await axios.patch(`http://${process.env.SERVER_URI}:5000/matching/unmatch/`,{username:person.username},{withCredentials:true},{ headers: {'Content-Type': "application/json"}})
-                        if(res.data == "success"){
-                            setUpdateMatches(prev => !prev)
-                        }
+                        try {
+                            const res = await axios.patch("/api/Unmatch", { username: person.username }, {
+                              withCredentials: true,
+                              headers: { "Content-Type": "application/json" },
+                            });
+                            if (res.data === "success") {
+                              setUpdateMatches((prev) => !prev);
+                            }
+                          } catch (e) {
+                            console.log("Error", e.stack);
+                            console.log("Error", e.name);
+                            console.log("Error", e.message);
+                          }
                     }}
                     messageHandler = {async ()=> {
                         router.push(`/Chats/${person.username}`)

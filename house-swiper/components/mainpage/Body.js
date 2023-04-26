@@ -29,9 +29,9 @@ export default function Body() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://${process.env.SERVER_URI}:5000/profiles/`,
-          { withCredentials: true },
-          { headers: { "Content-Type": "application/json" } }
+          `/api/Profiles`,
+          { withCredentials: true ,
+           headers: { "Content-Type": "application/json" } }
         );
         const data = await response.data;
         console.log(data);
@@ -57,10 +57,10 @@ export default function Body() {
                 image={person.image ? person.image : "/room7.jpg"}
                 handleClickRight={async () => {
                   const res = await axios.patch(
-                    `http://${process.env.SERVER_URI}:5000/matching/likeProfile`,
+                    `/api/LikeProfile`,
                     { username: person.username },
-                    { withCredentials: true },
-                    { headers: { "Content-Type": "application/json" } }
+                    { withCredentials: true ,
+                      headers: { "Content-Type": "application/json" } }
                   );
                   if (res.data != "no match") {
                     console.log(res);
@@ -84,18 +84,21 @@ export default function Body() {
     fetchData();
   }, [reload]);
 
-  const getLocationValue = async (e, value) => {
+  async function getLocationValue(e, value) {
     const response = await axios.post(
-      `http://${process.env.SERVER_URI}:5000/profiles/setLocationFilter`,
+      "/api/SetLocationFilter",
       { radius: value },
-      { withCredentials: true },
-      { headers: { "Content-Type": "application/json" } }
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
     );
     const data = response.data;
     console.log(data);
     setFilter(value)
     setReload(prev => !prev)
-  };
+  }
+  
   function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2-lat1);  // deg2rad below

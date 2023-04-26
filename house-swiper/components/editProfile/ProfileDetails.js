@@ -10,19 +10,25 @@ export default function ProfileDetails(props){
     const [bio,setBio] = useState("")
     const router = useRouter()
 
-    async function editProfileHandler(event){
-        event.preventDefault()
-        const formData = new FormData()
-        formData.append("bio",bio)
-        formData.append("image", file)
-        console.log(formData)
-        await axios.patch(`http://${process.env.SERVER_URI}:5000/profiles/submitNewProfile`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
-        props.refreshParent()
-        window.location = window.location
-       // in case this doesnt work just push back to main
-       // router.push("/")
-
-    }
+    async function editProfileHandler(event) {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('bio', bio);
+        formData.append('image', file);
+        try {
+          const response = await fetch('/api/SubmitNewProfile', {
+            method: 'PATCH',
+            body: formData
+          });
+          if (response.ok) {
+            props.refreshParent();
+            window.location.reload();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      
    
     return(
         <div className = {styles.container}>

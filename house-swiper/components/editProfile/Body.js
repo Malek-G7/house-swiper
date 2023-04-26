@@ -15,15 +15,15 @@ function refreshPage (){
 }
 const getData = async () => {
     try {
-        const res = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/getEditProfileDetails`,{ withCredentials: true },
-        { headers: { "Content-Type": "application/json" } })
-        const profile = res.data
-        setImage(profile.image)
-        setDescription(profile.description)
+      const response = await fetch('/api/GetEditProfileDetails');
+      const { profile } = await response.json();
+      setImage(profile.image);
+      setDescription(profile.description);
     } catch (error) {
-        console.log(error)        
+      console.error(error);
     }
-}
+  };
+  
 
 useEffect(()=>{
     getData();

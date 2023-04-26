@@ -5,10 +5,18 @@ import axios from 'axios'
 export default function Nav() {
     const router = useRouter()
 
-    async function logOutHandler(){
-        await axios.delete(`http://${process.env.SERVER_URI}:5000/profiles/logout`,{withCredentials:true})
-        router.push("/login")
-    }
+    async function logOutHandler() {
+        try {
+          const response = await fetch('/api/Logout', {
+            method: 'DELETE'
+          });
+          if (response.ok) {
+            router.push('/login');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }   
     return (
         <nav className={styles.navstyle}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.icon}>

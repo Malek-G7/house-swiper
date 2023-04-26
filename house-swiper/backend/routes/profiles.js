@@ -41,6 +41,8 @@ const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex'
 
 // router.post('/login', passport.authenticate('local', { failureRedirect: '/profiles/', successRedirect: 'http://localhost:5000/profiles/' }));
 router.post("/login", (req, res, next) => {
+    console.log("works here login")
+    console.log(req.body)
     passport.authenticate("local", (err, user) => {
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
@@ -54,9 +56,8 @@ router.post("/login", (req, res, next) => {
                 { "$set": { "location": location } },
                 { "new": true, "upsert": true },
             );
-            res.end()
+            res.status(200).json({ msg: 'success from server' + req.isAuthenticated()});
         });
-
     })(req, res);
   });
 
