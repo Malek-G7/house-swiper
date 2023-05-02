@@ -49,20 +49,19 @@
 .profileContainer{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     background-color: antiquewhite;
     border-top-left-radius: 100px;
-    border-top-right-radius: 100px;
-
     border-bottom-left-radius: 100px;
-    border-bottom-right-radius: 100px;
+    width : 100vw;
+    height: 25vh;
 }
 .imageContainer{
     flex:  0 0 20%;
-
 }
 .profilePic{
-    max-height:750px;
-    width:500px;
+    height:100%;
+    width:30vw;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
     border-top-left-radius: 100px;
@@ -84,7 +83,7 @@
     
 }
 .profileItem{
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
 }
 .list{
     list-style-type:none;
@@ -94,7 +93,6 @@
     justify-content: center;
 }
 .buttons{
-    
     align-items: center;
     background-color: #fee6e3;
     border: 2px solid #111;
@@ -105,13 +103,12 @@
     display: flex;
     font-family: "Lucida Console", "Courier New", monospace;
     font-size: 16px;
-    height: 48px;
+    height: 5vh;
     justify-content: center;
-    line-height: 24px;
     max-width: 100%;
-    margin:10px;
-    padding: 0 25px;
-    position: relative;
+    margin:1vh;
+    
+    
     text-align: center;
   }
   

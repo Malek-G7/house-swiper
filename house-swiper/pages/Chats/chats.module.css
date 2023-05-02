@@ -1,57 +1,70 @@
-.list{
-    list-style-type:none;
+.list {
+  list-style-type: none;
 }
-.page{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    background:  #ffffff;
-    
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
 }
-.outerMessagesContainer{
-    overflow-y: scroll;
-    height: 70vh;
-    font-family: 'Alegreya Sans SC'
+
+.outerMessagesContainer {
+  overflow-y: scroll;
+  height: 80vh; 
+  font-family: 'Alegreya Sans SC';
 }
-.messages{
-    background-color: rgb(185, 200, 233);
-    border-radius: 10px;
-    margin-bottom: 25px;
-    font-size:25pt;
-    height: auto;
-    display: inline-block;
-    margin-left: calc(100% - 70vh);
-    line-break:anywhere;
-    width: auto;
-    float: right;
+
+
+.messages {
+  background-color: rgb(185, 200, 233);
+  border-radius: 10px;
+  margin-bottom: 25px;
+  font-size: 25pt;
+  height: auto;
+  display: inline-block;
+  margin-left: calc(100% - 70vh);
+  line-break: anywhere;
+  width: auto;
+  float: right;
+}
+
+.receiver {
+  background-color: rgb(243, 185, 185);
+  border-radius: 10px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 25pt;
+  display: inline-block;
+  width: 70vh;
+  height: auto;
+  line-break: anywhere;
+}
+
+.chatBox {
+  padding: 2vh;
+  text-align: center;
+  background: antiquewhite;
+  /* position:fixed; */
+  bottom: 0;
+  width: 100%;
+  height: 12%
+}
+
+.inputBox {
+  height: 100%;
+  width: 80%;
+  font-size: 25pt;
+  border-radius: 50px;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 767px) {
+  .inputBox {
+    width: 70%;
   }
-  .receiver{
-    background-color: rgb(243, 185, 185);
-    border-radius: 10px;
-    margin-bottom: 25px;
-    display: flex;
-    flex-wrap: wrap;
-    font-size:25pt;
-    display: inline-block;
-    width: 70vh;
-    height: auto;
-    line-break:anywhere;
-
-  }
-.chatBox{
-    padding: 20px;
-    text-align: center;
-    background:antiquewhite;
-    position:fixed;
-    bottom: 0;
-    width: 100%;
-
-}
-.inputBox{
-    height:50px; width : 1500px;font-size:25pt;
-    border-radius: 50px;
-
 }
 .buttons{
     

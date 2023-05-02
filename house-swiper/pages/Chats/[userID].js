@@ -61,7 +61,6 @@ export default function ChatPage() {
                 {messages}
             
             <div className={styles.chatBox}>
-                <div id="message-container"></div>
                 <form id="send-container" onSubmit={sendMessageHandler}>
                     <input type="text" className={styles.inputBox} id="message-input" value={chatboxContent} onChange={(newText) => {
                         setChatBoxContent(newText.target.value)
