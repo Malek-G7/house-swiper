@@ -82,9 +82,8 @@
   flex-direction: row;
   justify-content: flex-end;
 }
-.imageContainer{
 
-}
+
 
 .title{
   font-family: "Brush Script MT", "Courier New", monospace;
@@ -101,3 +100,33 @@
 
 
 
+/* For tablet devices */
+@media (max-width: 768px) {
+  .navstyle {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .buttonContainer {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  .imageContainer {
+    width: 100vw;
+    height: 75vh;
+    overflow: hidden;
+  }
+}

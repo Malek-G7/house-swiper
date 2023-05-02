@@ -115,7 +115,7 @@ export default function Body() {
   }
   return (
     <div className={styles.container}>
-            <div className={styles.cards}>
+        <div className={styles.cards}>
         {cardIterator < cards.length ? (
           cards[cardIterator]
         ) : (
