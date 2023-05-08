@@ -1,5 +1,4 @@
 import axios from "axios"
-import { set } from "mongoose"
 import { useEffect, useState} from "react"
 import styles from "./Body.module.css"
 import ProfileDetails from "./ProfileDetails"
@@ -15,7 +14,7 @@ function refreshPage (){
 }
 const getData = async () => {
     try {
-        const res = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/getEditProfileDetails`,{ withCredentials: true },
+        const res = await axios.get(`https://${process.env.SERVER_URI}/profiles/getEditProfileDetails`,{ withCredentials: true },
         { headers: { "Content-Type": "application/json" } })
         const profile = res.data
         setImage(profile.image)

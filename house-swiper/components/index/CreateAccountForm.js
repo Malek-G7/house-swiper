@@ -48,7 +48,7 @@ export default function CreateAccountForm() {
         formData.append("lat", latitude)
         formData.append("long", longitude)
         formData.append("image", file)
-        await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/register`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        await axios.post(`https://${process.env.SERVER_URI}/profiles/register`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         //router.push("/")  
         swal("you have successfully created a house swiper account !\n\rkindly log in using your credentials")
     }

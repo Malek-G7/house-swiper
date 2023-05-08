@@ -47,7 +47,7 @@
   padding: 2vh;
   text-align: center;
   background: antiquewhite;
-  /* position:fixed; */
+  position:fixed; 
   bottom: 0;
   width: 100%;
   height: 12%
