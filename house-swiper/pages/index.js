@@ -9,7 +9,7 @@ export default function MainPage(props) {
   const router = useRouter()
   const isSignedIn = async () => {
     try {
-        const res = await axios.get(`http://${process.env.SERVER_URI}:5000/profiles/isSignedIn`,{ withCredentials: true },
+        const res = await axios.get(`https://${process.env.SERVER_URI}/profiles/isSignedIn`,{ withCredentials: true },
         { headers: { "Content-Type": "application/json" } })
     } catch (error) {
       router.push("/login")   

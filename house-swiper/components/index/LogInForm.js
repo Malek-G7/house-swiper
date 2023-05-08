@@ -23,7 +23,7 @@ export default function LogInForm() {
     async function logInHandler(event) {
         event.preventDefault()
         try {
-            await axios.post(`http://${process.env.SERVER_URI}:5000/profiles/login`, logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
+            await axios.post(`https://${process.env.SERVER_URI}/profiles/login`, logInData,{ withCredentials: true }, { headers: {'Content-Type': "application/json"}})
             router.push("/") 
         } catch (error) {
             if (error.response && error.response.status === 401) {

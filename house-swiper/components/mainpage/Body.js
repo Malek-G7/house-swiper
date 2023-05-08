@@ -29,7 +29,7 @@ export default function Body() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://${process.env.SERVER_URI}:5000/profiles/`,
+          `https://${process.env.SERVER_URI}/profiles/`,
           { withCredentials: true },
           { headers: { "Content-Type": "application/json" } }
         );
@@ -57,7 +57,7 @@ export default function Body() {
                 image={person.image ? person.image : "/room7.jpg"}
                 handleClickRight={async () => {
                   const res = await axios.patch(
-                    `http://${process.env.SERVER_URI}:5000/matching/likeProfile`,
+                    `https://${process.env.SERVER_URI}/matching/likeProfile`,
                     { username: person.username },
                     { withCredentials: true },
                     { headers: { "Content-Type": "application/json" } }
@@ -86,7 +86,7 @@ export default function Body() {
 
   const getLocationValue = async (e, value) => {
     const response = await axios.post(
-      `http://${process.env.SERVER_URI}:5000/profiles/setLocationFilter`,
+      `https://${process.env.SERVER_URI}/profiles/setLocationFilter`,
       { radius: value },
       { withCredentials: true },
       { headers: { "Content-Type": "application/json" } }

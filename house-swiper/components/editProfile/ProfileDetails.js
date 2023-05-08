@@ -16,7 +16,7 @@ export default function ProfileDetails(props){
         formData.append("bio",bio)
         formData.append("image", file)
         console.log(formData)
-        await axios.patch(`http://${process.env.SERVER_URI}:5000/profiles/submitNewProfile`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
+        await axios.patch(`https://${process.env.SERVER_URI}/profiles/submitNewProfile`, formData,{withCredentials:true}, { headers: {'Content-Type': 'multipart/form-data'}})
         props.refreshParent()
         window.location = window.location
        // in case this doesnt work just push back to main
